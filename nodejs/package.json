@@ -1,0 +1,16 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Cook and Share Website Admin",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "HaoDH",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "\u0016"
+  }
+}

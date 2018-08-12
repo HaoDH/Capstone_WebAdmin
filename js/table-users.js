@@ -1,6 +1,8 @@
 var db = firebase.firestore();
 var t = $('#usertable').DataTable();
-console.log("Loaded");
+Handlebars.registerHelper('noop', function(options) {
+    return options.fn(this);
+  });
 db.collection("User")
     .get()
     .then(function (querySnapshot) {
@@ -70,3 +72,6 @@ db.collection("User")
 //     secondName = doc.data().secondName
 // ])
 // });
+
+// Handlebars.registerHelper('imgURL', function(value){
+//     return profile.photos[0].value;});
