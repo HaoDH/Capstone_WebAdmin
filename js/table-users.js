@@ -1,29 +1,25 @@
-
 var db = firebase.firestore();
-
 console.log("Loaded");
 db.collection("User")
     .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
             console.log(doc.id, " => ", doc.data());
-            $(document).ready(function () {
-                var source = $("#load-list-users").html();
-                var template = Handlebars.compile(source);
-                var context = {
-                    userID: doc.data().userID,
-                    firstName: doc.data().firstName,
-                    sex: doc.data().sex,
-                    dateOfBirth: doc.data().dateOfBirth,
-                    phone: doc.data().phone,
-                    secondName: doc.data().secondName
-                }
-                var el_html = template(context);
-                $("#listusers").html(el_html);
-            });
-        })
+            var table = document.getElementById("listusers");
+            var col = '<tr>' +
+                '<td>' + doc.data().userID + '</td> ' +
+                '<td >' + doc.data().firstName + ' </td> ' +
+                '<td >' + doc.data().sex + '</td> ' +
+                '<td>' + doc.data().dateOfBirth + '</td>' +
+                '<td>' + doc.data().phone + '</td>' +
+                '<td>' + doc.data().secondName + '</td>' +
+                '</tr>';
+            console.log(col);
+            table.insertAdjacentHTML('beforeend', col);
+            //table.innerHTML(col);
+        });
     })
-    .catch(function (error) {
+    .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
 
