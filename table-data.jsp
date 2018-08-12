@@ -1,10 +1,3 @@
-<%-- 
-    Document   : table-data
-    Created on : Aug 8, 2018, 4:09:10 PM
-    Author     : haodang
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
