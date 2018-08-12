@@ -19,6 +19,9 @@
     <link href="plugins/icomoon/style.css" rel="stylesheet">
     <link href="plugins/uniform/css/default.css" rel="stylesheet" />
     <link href="plugins/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
 
     <!-- Theme Styles -->
     <link href="css/space.min.css" rel="stylesheet">
@@ -43,7 +46,8 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="js/pages/profile.js"></script>
+    <!-- Javascripts -->
+    <script src="js/table-posts.js"></script>
 </head>
 
 <body>
@@ -52,7 +56,7 @@
     <div class="page-container">
         <!-- Page Sidebar -->
         <div class="page-sidebar">
-            <a class="logo-box" href="index.jsp">
+            <a class="logo-box" href="index.html">
                 <span>Space</span>
                 <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
@@ -61,13 +65,13 @@
                 <div class="page-sidebar-menu">
                     <ul class="accordion-menu">
                         <li>
-                            <a href="index.jsp">
+                            <a href="index.html">
                                 <i class="menu-icon icon-home4"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="email.jsp">
+                            <a href="email.html">
                                 <i class="menu-icon icon-inbox"></i>
                                 <span>Email</span>
                             </a>
@@ -80,34 +84,34 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="ui-alerts.jsp">Alerts</a>
+                                    <a href="ui-alerts.html">Alerts</a>
                                 </li>
                                 <li>
-                                    <a href="ui-buttons.jsp">Buttons</a>
+                                    <a href="ui-buttons.html">Buttons</a>
                                 </li>
                                 <li>
-                                    <a href="ui-icons.jsp">Icons</a>
+                                    <a href="ui-icons.html">Icons</a>
                                 </li>
                                 <li>
-                                    <a href="ui-typography.jsp">Typography</a>
+                                    <a href="ui-typography.html">Typography</a>
                                 </li>
                                 <li>
-                                    <a href="ui-notifications.jsp">Notifications</a>
+                                    <a href="ui-notifications.html">Notifications</a>
                                 </li>
                                 <li>
-                                    <a href="ui-modals.jsp">Modals</a>
+                                    <a href="ui-modals.html">Modals</a>
                                 </li>
                                 <li>
-                                    <a href="ui-progress.jsp">Progress Bars</a>
+                                    <a href="ui-progress.html">Progress Bars</a>
                                 </li>
                                 <li>
-                                    <a href="ui-tabs-accordions.jsp">Tabs &amp; Accordions</a>
+                                    <a href="ui-tabs-accordions.html">Tabs &amp; Accordions</a>
                                 </li>
                                 <li>
-                                    <a href="ui-tree-view.jsp">Tree View</a>
+                                    <a href="ui-tree-view.html">Tree View</a>
                                 </li>
                                 <li>
-                                    <a href="ui-nestable.jsp">Nestable</a>
+                                    <a href="ui-nestable.html">Nestable</a>
                                 </li>
                             </ul>
                         </li>
@@ -119,22 +123,22 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="layout-blank.jsp">Blank Page</a>
+                                    <a href="layout-blank.html">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="layout-boxed.jsp">Boxed Layout</a>
+                                    <a href="layout-boxed.html">Boxed Layout</a>
                                 </li>
                                 <li>
-                                    <a href="layout-collapsed-sidebar.jsp">Collapsed Sidebar</a>
+                                    <a href="layout-collapsed-sidebar.html">Collapsed Sidebar</a>
                                 </li>
                                 <li>
-                                    <a href="layout-fixed-header.jsp">Fixed Header</a>
+                                    <a href="layout-fixed-header.html">Fixed Header</a>
                                 </li>
                                 <li>
-                                    <a href="layout-fixed-sidebar.jsp">Fixed Sidebar</a>
+                                    <a href="layout-fixed-sidebar.html">Fixed Sidebar</a>
                                 </li>
                                 <li>
-                                    <a href="layout-fixed-sidebar-header.jsp">Fixed Sidebar &amp; Header</a>
+                                    <a href="layout-fixed-sidebar-header.html">Fixed Sidebar &amp; Header</a>
                                 </li>
                             </ul>
                         </li>
@@ -146,26 +150,26 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="form-elements.jsp">Elements</a>
+                                    <a href="form-elements.html">Elements</a>
                                 </li>
                                 <li>
-                                    <a href="form-wizard.jsp">Form Wizard</a>
+                                    <a href="form-wizard.html">Form Wizard</a>
                                 </li>
                                 <li>
-                                    <a href="form-file-upload.jsp">File Upload</a>
+                                    <a href="form-file-upload.html">File Upload</a>
                                 </li>
                                 <li>
-                                    <a href="form-image-crop.jsp">Image Crop</a>
+                                    <a href="form-image-crop.html">Image Crop</a>
                                 </li>
                                 <li>
-                                    <a href="form-image-zoom.jsp">Image Zoom</a>
+                                    <a href="form-image-zoom.html">Image Zoom</a>
                                 </li>
                                 <li>
-                                    <a href="form-x-editable.jsp">X-editable</a>
+                                    <a href="form-x-editable.html">X-editable</a>
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li class="active-page">
                             <a href="javascript:void(0);">
                                 <i class="menu-icon icon-format_list_bulleted"></i>
                                 <span>Tables</span>
@@ -173,18 +177,18 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="table-static.jsp">Static</a>
+                                    <a href="table-static.html">Static</a>
                                 </li>
                                 <li>
-                                    <a href="table-responsive.jsp">Responsive</a>
+                                    <a href="table-responsive.html">Responsive</a>
                                 </li>
                                 <li>
-                                    <a href="table-data.jsp">Data Tables</a>
+                                    <a href="table-data.html" class="active">Data Tables</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="charts.jsp">
+                            <a href="charts.html">
                                 <i class="menu-icon icon-show_chart"></i>
                                 <span>Charts</span>
                             </a>
@@ -197,14 +201,14 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="maps-google.jsp">Google</a>
+                                    <a href="maps-google.html">Google</a>
                                 </li>
                                 <li>
-                                    <a href="maps-vector.jsp">Vector</a>
+                                    <a href="maps-vector.html">Vector</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="active-page">
+                        <li>
                             <a href="javascript:void(0);">
                                 <i class="menu-icon icon-star"></i>
                                 <span>Extra</span>
@@ -212,49 +216,49 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="invoice.jsp">Invoice</a>
+                                    <a href="invoice.html">Invoice</a>
                                 </li>
                                 <li>
-                                    <a href="404.jsp">404 Page</a>
+                                    <a href="404.html">404 Page</a>
                                 </li>
                                 <li>
-                                    <a href="500.jsp">500 Page</a>
+                                    <a href="500.html">500 Page</a>
                                 </li>
                                 <li>
-                                    <a href="profile.jsp" class="active">Profile</a>
+                                    <a href="profile.html">Profile</a>
                                 </li>
                                 <li>
-                                    <a href="login.jsp">Login</a>
+                                    <a href="login.html">Login</a>
                                 </li>
                                 <li>
-                                    <a href="register.jsp">Register</a>
+                                    <a href="register.html">Register</a>
                                 </li>
                                 <li>
-                                    <a href="lockscreen.jsp">Lockscreen</a>
+                                    <a href="lockscreen.html">Lockscreen</a>
                                 </li>
                                 <li>
-                                    <a href="todo.jsp">Todo</a>
+                                    <a href="todo.html">Todo</a>
                                 </li>
                                 <li>
-                                    <a href="gallery.jsp">Gallery</a>
+                                    <a href="gallery.html">Gallery</a>
                                 </li>
                                 <li>
-                                    <a href="pricing-tables.jsp">Pricing Tables</a>
+                                    <a href="pricing-tables.html">Pricing Tables</a>
                                 </li>
                                 <li>
-                                    <a href="timeline.jsp">Timeline</a>
+                                    <a href="timeline.html">Timeline</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="menu-divider"></li>
                         <li>
-                            <a href="index.jsp">
+                            <a href="index.html">
                                 <i class="menu-icon icon-help_outline"></i>
                                 <span>Documentation</span>
                             </a>
                         </li>
                         <li>
-                            <a href="index.jsp">
+                            <a href="index.html">
                                 <i class="menu-icon icon-public"></i>
                                 <span>Changelog</span>
                                 <span class="label label-danger">1.0</span>
@@ -290,7 +294,7 @@
                                 <a href="javascript:void(0)" id="sidebar-toggle-button">
                                     <i class="fa fa-bars"></i>
                                 </a>
-                                <a class="logo-box" href="index.jsp">
+                                <a class="logo-box" href="index.html">
                                     <span>Space</span>
                                 </a>
                             </div>
@@ -418,134 +422,112 @@
             </div>
             <!-- /Page Header -->
             <!-- Page Inner -->
-            <div class="page-inner no-page-title">
+            <div class="page-inner">
+                <div class="page-title">
+                    <h3 class="breadcrumb-header">Data Tables</h3>
+                </div>
                 <div id="main-wrapper">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12">
                             <div class="panel panel-white">
                                 <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">User Profile</h4>
-                                </div>
-                                <div class="panel-body user-profile-panel" id="profile-panel-div">
-                                    <script id="load-user-profile" type="text/x-handlebars-template">
-                                               <img  src="{{{imgURL}}}" class="user-profile-image img-circle" alt="">
-                                    <h4 class="text-center m-t-lg">{{firstName}}</h4>
-                                    <p class="text-center">{{userID}}</p>
-                                    <hr>
-                                    <ul class="list-unstyled text-center">
-                                        <li>
-                                            <p><i class="fa fa-user m-r-xs"></i>Gender: {{sex}}</p>
-                                        </li>
-                                        <li>
-                                            <p><i class="fa fa-mobile m-r-xs"></i>{{phone}}</p>
-                                        </li>
-                                        <li>
-                                            <p><i class="fa fa-birthday-cake m-r-xs"></i>{{dateOfBirth}}</p>
-                                        </li>
-                                    </ul>
-                                    <hr>
-                                    <button class="btn btn-info btn-block">Lock</button>
-                                   <button class="btn btn-block" onclick="deleteUser()"  style="color: #fff; background-color: crimson; border-color: crimson" id="btn-delete">Delete</button>
-                                            </script>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="profile-timeline">
-                                <ul class="list-unstyled">
-                                    <li class="timeline-item">
-                                        <div class="panel panel-white">
-                                            <div class="panel-body">
-                                                <div class="timeline-item-header">
-                                                    <img src="http://via.placeholder.com/40x40" alt="">
-                                                    <p>jack smith
-                                                        <span>posted a status</span>
-                                                    </p>
-                                                    <small>3 hours ago</small>
-                                                </div>
-                                                <div class="timeline-item-post">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor
-                                                        mi eget laoreet auctor. Proin dictum nulla id augue aliquam, vitae
-                                                        condimentum erat imperdiet</p>
-                                                    <div class="timeline-options">
-                                                        <a href="#">
-                                                            <i class="fa fa-thumbs-up"></i> Like (7)</a>
-                                                        <a href="#">
-                                                            <i class="fa fa-comment"></i> Comment (2)</a>
-                                                        <a href="#">
-                                                            <i class="fa fa-share"></i> Share (3)</a>
-                                                    </div>
-                                                    <div class="timeline-comment">
-                                                        <div class="timeline-comment-header">
-                                                            <img src="http://via.placeholder.com/30x30" alt="">
-                                                            <p>ethan green
-                                                                <small>1 hour ago</small>
-                                                            </p>
-                                                        </div>
-                                                        <p class="timeline-comment-text">Aenean tincidunt mi ut leo auctor, eleifend molestie erat vulputate</p>
-                                                    </div>
-                                                    <div class="timeline-comment">
-                                                        <div class="timeline-comment-header">
-                                                            <img src="http://via.placeholder.com/30x30" alt="">
-                                                            <p>john doe
-                                                                <small>3 hours ago</small>
-                                                            </p>
-                                                        </div>
-                                                        <p class="timeline-comment-text">Nam non libero sem. Nullam commodo tellus quis massa pulvinar, sed
-                                                            blandit tortor tincidunt. Nulla consequat at nisi sit amet consectetur</p>
-                                                    </div>
-                                                    <textarea class="form-control" placeholder="Replay"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="timeline-item">
-                                        <div class="panel panel-white">
-                                            <div class="panel-body">
-                                                <div class="timeline-item-header">
-                                                    <img src="http://via.placeholder.com/40x40" alt="">
-                                                    <p>david smith
-                                                        <span>uploaded a photo</span>
-                                                    </p>
-                                                    <small>7 hours ago</small>
-                                                </div>
-                                                <div class="timeline-item-post">
-                                                    <p>Aenean ante nunc, eleifend eget hendrerit eget</p>
-                                                    <img src="http://via.placeholder.com/500x300" alt="">
-                                                    <div class="timeline-options">
-                                                        <a href="#">
-                                                            <i class="fa fa-thumbs-up"></i> Like (12)</a>
-                                                        <a href="#">
-                                                            <i class="fa fa-comment"></i> Comment (1)</a>
-                                                        <a href="#">
-                                                            <i class="fa fa-share"></i> Share (6)</a>
-                                                    </div>
-                                                    <div class="timeline-comment">
-                                                        <div class="timeline-comment-header">
-                                                            <img src="http://via.placeholder.com/30x30" alt="">
-                                                            <p>noah smith
-                                                                <small>1 hour ago</small>
-                                                            </p>
-                                                        </div>
-                                                        <p class="timeline-comment-text">Cras tempor pretium lorem, quis suscipit ipsum</p>
-                                                    </div>
-                                                    <textarea class="form-control" placeholder="Replay"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="panel panel-white">
-                                <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">Some Info</h4>
+                                    <h4 class="panel-title">Basic example</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <p>Integer tincidunt varius nulla, vitae facilisis nibh ornare dignissim. Morbi in orci
-                                        vitae magna vestibulum placerat at vel augue. Pellentesque rutrum ipsum eget odio</p>
+                                    <div class="table-responsive">
+                                        <table id="posttable" class="display table" style="width: 100%; cellspacing: 0;">
+                                            <thead>
+                                                <tr data-href="profile.html?id=1">
+                                                    <th>Post ID</th>
+                                                    <th>Username</th>
+                                                    <th>Like</th>
+                                                    <th>Comment</th>
+                                                    <th>Difficult</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Post ID</th>
+                                                    <th>Username</th>
+                                                    <th>Like</th>
+                                                    <th>Comment</th>
+                                                    <th>Difficult</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody id="listpost">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-default m-b-sm" data-toggle="modal">Delete</button>
+                                   
+                            </div>
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Add rows</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <button type="button" class="btn btn-success m-b-sm" data-toggle="modal" data-target="#myModal">Add new row</button>
+                                    <!-- Modal -->
+                                    <form id="add-row-form" action="javascript:void(0);">
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <input type="text" id="name-input" class="form-control" placeholder="Name" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" id="position-input" class="form-control" placeholder="Position" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="number" id="age-input" class="form-control" placeholder="Age" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" id="date-input" class="form-control date-picker" placeholder="Start Date" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="number" id="salary-input" class="form-control" placeholder="Salary" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" id="add-row" class="btn btn-success">Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="table-responsive">
+                                        <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Position</th>
+                                                    <th>Age</th>
+                                                    <th>Start date</th>
+                                                    <th>Salary</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Position</th>
+                                                    <th>Age</th>
+                                                    <th>Start date</th>
+                                                    <th>Salary</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -740,12 +722,14 @@
 
 
     <!-- Javascripts -->
-    <script src="plugins/jquery/jquery-3.1.0.min.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
     <script src="plugins/switchery/switchery.min.js"></script>
+    <script src="plugins/datatables/js/jquery.datatables.min.js"></script>
+    <script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="js/space.min.js"></script>
+    <script src="js/pages/table-data.js"></script>
 </body>
 
 </html>

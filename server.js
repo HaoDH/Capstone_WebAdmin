@@ -8,7 +8,7 @@ var server = http.createServer(function(request, response){
     // Biến response: là biến lưu trữ các thông tin trả về cho client
      
     // Kiểm tra URL truy cập phải trang about ko
-    if (request.url == '/about.html')
+    if (request.url == '/index.html')
     {
         // Thiết lập Header
         response.writeHead(200, {
@@ -16,7 +16,7 @@ var server = http.createServer(function(request, response){
         });
          
         // Show thông tin trang about
-        fs.createReadStream('D:/Project/Capstone_WebAdmin/index.html').pipe(response);
+        fs.createReadStream('./index.html').pipe(response);
     }
     else // trường hợp ngược lại ko tìm thấy file
     {

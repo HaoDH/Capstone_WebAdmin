@@ -1,0 +1,69 @@
+var db = firebase.firestore();
+var pTable = $('#posttable').DataTable();
+
+db.collection("Post")
+    .get()
+    .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            console.log(doc.id, " => ", doc.data());
+            var table = document.getElementById("listpost");
+            var row = '<tr>' +
+                '<td>' + doc.data().postID + '</td>' +
+                '<td>' + doc.data().userName + '</td>' +
+                '<td>' + doc.data().like + '</td>' +
+                '<td>' + doc.data().comment + '</td>' +
+                '<td>' + doc.data().difficult + '</td>' +
+                '<td>' + doc.data().description + '</td>' +
+                '</tr>';
+            pTable.row.add([
+                postID = doc.data().postID,
+                userName = doc.data().userName,
+                like = doc.data().like,
+                comment = doc.data().comment,
+                difficult = doc.data().difficult,
+                description = doc.data().description
+            ]).draw();
+            console.log(row);
+            table.insertAdjacentHTML('beforeend', row);
+        });
+        // $('#usertable').dataTable();
+        $('#posttable').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"post.html?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                }
+            ]
+        });
+
+        
+    $(document).ready(function() {
+        var table = $('#posttable').DataTable();
+     
+        $('#posttable tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        } );
+     
+        $('#button').click( function () {
+            table.row('.selected').remove().draw( false );
+        } );
+    } );
+
+    })
+    .catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });

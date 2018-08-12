@@ -12,8 +12,8 @@ db.collection("User")
             var table = document.getElementById("listusers");
             var col = '<tr>' +
                 '<td>' + doc.data().userID + '</td> ' +
-                '<td >' + doc.data().firstName + '</td> ' +
-                '<td >' + doc.data().sex + '</td> ' +
+                '<td>' + doc.data().firstName + '</td> ' +
+                '<td>' + doc.data().sex + '</td> ' +
                 '<td>' + doc.data().dateOfBirth + '</td>' +
                 '<td>' + doc.data().phone + '</td>' +
                 '<td>' + doc.data().secondName + '</td>' +
@@ -73,5 +73,5 @@ db.collection("User")
 // ])
 // });
 
-// Handlebars.registerHelper('imgURL', function(value){
-//     return profile.photos[0].value;});
+Handlebars.registerHelper('imgURL', function(value){
+    return profile.photos[0].value;});
