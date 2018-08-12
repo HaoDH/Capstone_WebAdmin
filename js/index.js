@@ -9,25 +9,6 @@
 var db = firebase.firestore();
 var btn = document.getElementById("btn2");
 
-// db.collection("Post")
-//     .get()
-//     .then(function(querySnapshot) {
-//         querySnapshot.forEach(function(doc) {
-//             console.log(doc.id, " => ", doc.data(), "==>", querySnapshot.size);
-//         });
-//         size = querySnapshot.size;
-//         var source = $("#load-post").html();
-//         var template = Handlebars.compile(source);
-//         var context = {
-//             context: size
-//         }
-//         var el_html = template(context);
-//         $("#divtotalpost").html(el_html);
-//     })
-//     .catch(function(error) {
-//         console.log("Error getting documents: ", error);
-//     });
-
 db.collection("Post")
     .get()
     .then(function(querySnapshot) {
