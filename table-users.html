@@ -30,6 +30,8 @@
     <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
     <script src="plugins/handlebars/handlebars-v4.0.11.js" type="text/javascript"></script>
+    <script src="plugins/jquery/jquery-3.1.0.min.js"></script>
+    <script src="plugins/datatables/js/jquery.datatables.min.js"></script>
 
     <script>
         var config = {
@@ -430,9 +432,9 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
-                                        <table id="example" class="display table" style="width: 100%; cellspacing: 0;">
+                                        <table id="usertable" class="display table" style="width: 100%; cellspacing: 0;">
                                             <thead>
-                                                <tr>
+                                                <tr data-href="profile.html?id=1">
                                                     <th>User ID</th>
                                                     <th>Full name</th>
                                                     <th>Gender</th>
@@ -716,7 +718,6 @@
 
 
     <!-- Javascripts -->
-    <script src="plugins/jquery/jquery-3.1.0.min.js"></script>
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
