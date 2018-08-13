@@ -443,39 +443,49 @@
                                             </li>
                                         </ul>
                                         <hr>
-                                        <button class="btn btn-info btn-block">Lock</button>
-                                        <button class="btn btn-block" onclick="deleteUser()" style="color: #fff; background-color: crimson; border-color: crimson" id="btn-delete">Delete</button>
+                                        <button class="btn btn-block" onclick="lockUser()" style="color: #fff; background-color: crimson; border-color: crimson" id="btn-delete">Lock</button>
                                     </script>
 
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="profile-timeline">
-                                <ul class="list-unstyled">
-                                    <li class="timeline-item">
-                                        <div class="panel panel-white">
-                                            <div class="panel-body">
-                                                <div class="timeline-item-header">
-                                                    <img src="http://via.placeholder.com/40x40" alt="">
-                                                    <p>jack smith
-                                                        <span>posted a status</span>
-                                                    </p>
-                                                    <small>3 hours ago</small>
-                                                </div>
-                                                <div class="timeline-item-post">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor mi eget laoreet auctor. Proin dictum nulla id augue aliquam, vitae condimentum erat imperdiet</p>
-                                                    <div class="timeline-options">
-                                                        <button class="btn btn-default" style="position: relative; left: 68%"> Cancel</button>
-
-                                                        <button class="btn btn-default" style="position: relative; left: 70%;border-color: red; color: red">Approlt</button>
+                                <div class="profile-timeline">
+                                        <ul class="list-unstyled">
+                                            <li class="timeline-item">
+                                                <div class="panel panel-white">
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table id="reporttable" class="display table" style="width: 100%; cellspacing: 0;">
+                                                                <thead>
+                                                                    <tr data-href="profile.html?id=1">
+                                                                        <th>User ID</th>
+                                                                        <th>User Name</th>
+                                                                        <th>Content</th>
+                                                                        <th>Time</th>
+                                                                        <th>Approval</th>
+                                                                        <th>Cancel</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tfoot>
+                                                                    <tr> 
+                                                                        <th>User ID</th>
+                                                                        <th>User Name</th>
+                                                                        <th>Content</th>
+                                                                        <th>Time</th>
+                                                                        <th>Approval</th>
+                                                                        <th>Cancel</th>
+                                                                    </tr>
+                                                                </tfoot>
+                                                                <tbody id="listreport">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                         </div>
                         <div class="col-md-3">
                             <div class="panel panel-white">

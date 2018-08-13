@@ -60,7 +60,3 @@ db.collection("Post")
             });
         });
 
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });

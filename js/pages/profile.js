@@ -49,7 +49,7 @@ db.collection("User").where('userID', '==', userID)
     });
     
 // Delete button
-    function deleteUser(){
+    function lockUser(){
         if(confirm("Are you sure you want to delete this user?")){
             db.collection("User").where('userID', '==', userID).delete().then(function() {
                 console.log("Document successfully deleted!");
