@@ -1,0 +1,19 @@
+{
+    "name": "capstone_webadmin",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.html",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/HaoDH/Capstone_WebAdmin.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/HaoDH/Capstone_WebAdmin/issues"
+    },
+    "homepage": "https://github.com/HaoDH/Capstone_WebAdmin#readme"
+}
