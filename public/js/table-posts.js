@@ -59,4 +59,4 @@ db.collection("Post")
                 table.row('.selected').remove().draw(false);
             });
         });
-
+    });

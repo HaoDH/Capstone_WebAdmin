@@ -40,7 +40,7 @@ db.collection("User")
                     "targets": 0,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile.html?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
                         }
                         return data;
                     }
