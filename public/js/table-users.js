@@ -1,8 +1,8 @@
 var db = firebase.firestore();
 var t = $('#usertable').DataTable();
-Handlebars.registerHelper('noop', function(options) {
+Handlebars.registerHelper('noop', function (options) {
     return options.fn(this);
-  });
+});
 db.collection("User")
     .get()
     .then(function (querySnapshot) {
@@ -11,6 +11,7 @@ db.collection("User")
             $('#exampless').dataTable();
             var table = document.getElementById("listusers");
             var col = '<tr>' +
+                '<td>' + doc.id + '</td> ' +
                 '<td>' + doc.data().userID + '</td> ' +
                 '<td>' + doc.data().firstName + '</td> ' +
                 '<td>' + doc.data().sex + '</td> ' +
@@ -19,6 +20,7 @@ db.collection("User")
                 '<td>' + doc.data().secondName + '</td>' +
                 '</tr>';
             t.row.add([
+                docID = doc.id,
                 userID = doc.data().userID,
                 fistName = doc.data().firstName,
                 sex = doc.data().sex,
@@ -73,5 +75,6 @@ db.collection("User")
 // ])
 // });
 
-Handlebars.registerHelper('imgURL', function(value){
-    return profile.photos[0].value;});
+Handlebars.registerHelper('imgURL', function (value) {
+    return profile.photos[0].value;
+});

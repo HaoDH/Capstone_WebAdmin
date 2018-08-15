@@ -8,6 +8,7 @@ db.collection("Post")
             console.log(doc.id, " => ", doc.data());
             var table = document.getElementById("listpost");
             var row = '<tr>' +
+                '<td>' + doc.id + '</td>' +
                 '<td>' + doc.data().postID + '</td>' +
                 '<td>' + doc.data().userID + '</td>' +
                 '<td>' + doc.data().like + '</td>' +
@@ -16,6 +17,7 @@ db.collection("Post")
                 '<td>' + doc.data().description + '</td>' +
                 '</tr>';
             pTable.row.add([
+                docID = doc.id,
                 postID = doc.data().postID,
                 userName = doc.data().userID,
                 like = doc.data().like,
@@ -26,6 +28,7 @@ db.collection("Post")
             console.log(row);
             table.insertAdjacentHTML('beforeend', row);
         });
+        
         // $('#usertable').dataTable();
         $('#posttable').DataTable({
             "destroy": true,
@@ -35,7 +38,7 @@ db.collection("Post")
                 "targets": 0,
                 "render": function(data, type, row) {
                     if (type === "display") {
-                        return "<a href=\"post-detail.html?postID=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                        return "<a href=\"post-detail?docID=" + encodeURIComponent(data) + "\">" + data + "</a>";
                     }
                     return data;
                 }

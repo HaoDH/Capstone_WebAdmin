@@ -1,73 +1,43 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const Schema = mongoose.Schema;
+// app/models/user.js
+var mongoose = require('mongoose');
+var bcrypt = require('bcrypt-nodejs');
 
-// Create a schema
-const userSchema = new Schema({
-  method: {
-    type: String,
-    enum: ['local', 'google', 'facebook'],
-    required: true
-  },
-  local: {
-    email: {
-      type: String,
-      lowercase: true
+
+var userSchema = mongoose.Schema({
+
+    local: {
+        email: String,
+        password: String,
     },
-    password: { 
-      type: String
-    }
-  },
-  google: {
-    id: {
-      type: String
+    facebook: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
     },
-    email: {
-      type: String,
-      lowercase: true
-    }
-  },
-  facebook: {
-    id: {
-      type: String
+    twitter: {
+        id: String,
+        token: String,
+        displayName: String,
+        username: String
     },
-    email: {
-      type: String,
-      lowercase: true
+    google: {
+        id: String,
+        token: String,
+        email: String,
+        name: String
     }
-  }
 });
 
-userSchema.pre('save', async function(next) {
-  try {
-    console.log('entered');
-    if (this.method !== 'local') {
-      next();
-    }
+// Các phương thức ======================
+// Tạo mã hóa mật khẩu
+userSchema.methods.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
 
-    // Generate a salt
-    const salt = await bcrypt.genSalt(10);
-    // Generate a password hash (salt + hash)
-    const passwordHash = await bcrypt.hash(this.local.password, salt);
-    // Re-assign hashed version over original, plain text password
-    this.local.password = passwordHash;
-    console.log('exited');
-    next();
-  } catch(error) {
-    next(error);
-  }
-});
+// kiểm tra mật khẩu có trùng khớp
+userSchema.methods.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
 
-userSchema.methods.isValidPassword = async function(newPassword) {
-  try {
-    return await bcrypt.compare(newPassword, this.local.password);
-  } catch(error) {
-    throw new Error(error);
-  }
-}
-
-// Create a model
-const User = mongoose.model('user', userSchema);
-
-// Export the model
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

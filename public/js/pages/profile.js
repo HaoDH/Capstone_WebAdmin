@@ -1,6 +1,4 @@
 var db = firebase.firestore();
-
-
 function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -19,45 +17,98 @@ function getUrlParameter(sParam) {
     }
 };
 
-var userID = getUrlParameter('account');
-console.log(userID);
+var docID = getUrlParameter('account');
 
+var userRef = db.collection("User").doc(docID);
+userRef.get().then(function (doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        $(document).ready(function () {
+            var source = $("#load-user-profile").html();
+            var template = Handlebars.compile(source);
+            var context = {
+                imgURL: doc.data().imgUrl,
+                firstName: doc.data().firstName,
+                userID: doc.data().userID,
+                sex: doc.data().sex,
+                phone: doc.data().phone,
+                dateOfBirth: doc.data().dateOfBirth
+            }
+            var el_html = template(context);
+            $("#profile-panel-div").html(el_html);
+        })
 
-db.collection("User").where('userID', '==', userID)
-    .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            $(document).ready(function () {
-                var source = $("#load-user-profile").html();
-                var template = Handlebars.compile(source);
-                var context = {
-                    imgURL: doc.data().imgUrl,
-                    firstName: doc.data().firstName,
-                    userID: doc.data().userID,
-                    sex: doc.data().sex,
-                    phone: doc.data().phone,
-                    dateOfBirth: doc.data().dateOfBirth
-                }
-                var el_html = template(context);
-                $("#profile-panel-div").html(el_html);
+        //Load list post of user
+
+        var userPostTable = $('#posttableofuser').DataTable();
+        db.collection("Post").where('userID', '==', doc.data().userID)
+            .get()
+            .then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    console.log(doc.data());
+                    var table = document.getElementById("listpostofuser");
+
+                    var row = '<tr>' +
+                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.data().like + '</td>' +
+                        '<td>' + doc.data().comment + '</td>' +
+                        '<td>' + doc.data().difficult + '</td>' +
+                        '<td style = "overflow:hidden; white-space:nowrap">' + doc.data().description + '</td>' +
+                        '</tr>';
+                    userPostTable.row.add([
+                        postID = doc.data().postID,
+                        like = doc.data().like,
+                        comment = doc.data().comment,
+                        difficult = doc.data().difficult,
+                        description = doc.data().description
+                    ]).draw();
+                    console.log("DATATABLE: " + userPostTable.length);
+                    table.insertAdjacentHTML('beforeend', row);
+                })
+                $(document).ready(function () {
+                    // var table = $('#posttableofuser').DataTable();
+                    $('#posttableofuser').DataTable();
+                    $('#posttableofuser tbody').on('click', 'tr', function () {
+                        if ($(this).hasClass('selected')) {
+                            $(this).removeClass('selected');
+                        } else {
+                            userPostTable.$('tr.selected').removeClass('selected');
+                            $(this).addClass('selected');
+                        }
+                    });
+
+                    $('#button').click(function () {
+                        userPostTable.row('.selected').remove().draw(false);
+                    });
+                });
+            }).catch(function (error) {
+                console.log("Error getting documents: ", error);
             })
-            console.log(doc.data());
-        });
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
-    
-// Delete button
-    function lockUser(){
-        if(confirm("Are you sure you want to delete this user?")){
-            db.collection("User").where('userID', '==', userID).delete().then(function() {
-                console.log("Document successfully deleted!");
-            }).catch(function(error) {
-                console.error("Error removing document: ", error);
-            });
-        }else{
-            console.log("Why!!!")
-            return false;
-        }
+
+            //end
+
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
     }
+}).catch(function (error) {
+    console.log("Error getting document:", error);
+});
+
+// Lock button
+function lockUser() {
+    if (confirm("Are you sure you want to delete this user?")) {
+        var user = db.collection("User").doc(docID);
+        return user.update({
+            status: false
+        }).then(function () {
+            console.log("Document successfully updated!");
+        }).catch(function (error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+    } else {
+        console.log("Why!!!")
+        return false;
+    }
+}

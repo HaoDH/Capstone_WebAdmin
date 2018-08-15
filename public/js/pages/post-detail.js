@@ -18,97 +18,102 @@ function getUrlParameter(sParam) {
         }
     }
 };
-var postID = getUrlParameter('postID');
-console.log(postID);
+var docID = getUrlParameter('docID');
+var reportRef;
+console.log(docID);
 
+var postRef = db.collection("Post").doc(docID); 4
 
-db.collection("Post").where('postID', '==', postID)
-    .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-            $(document).ready(function () {
-                var source = $("#load-post-detail").html();
-                var template = Handlebars.compile(source);
-                var context = {
-                    urlImage: doc.data().urlImage,
-                    title: doc.data().title,
-                    userID: doc.data().userID,
-                    userName: doc.data().userName,
-                    postID: doc.data().postID,
-                    dateCreate: doc.data().dateCreate
-                }
-                var el_html = template(context);
-
-                $("#post-detail-panel-div").html(el_html);
-            })
-            console.log(doc.data());
-        });
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
-
-var reportTable = $("#reporttable").DataTable();    
-db.collection("Report").where('postID', '==', postID)
-    .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-
-            $('#reporttable').parents('div.dataTables_wrapper').first().hide();
-            console.log("Document data:", doc.data());
-            var i = 0;
-            for (i = 0; i < doc.data().report.length; i++) {
-                var table = document.getElementById("listreport");
-                var row = '<tr>' +
-                    '<td>' + doc.data().report[i].userID + '</td>' +
-                    '<td>' + doc.data().report[i].userName + '</td>' +
-                    '<td>' + doc.data().report[i].content + '</td>' +
-                    '<td>' + doc.data().report[i].time + '</td>' +
-                    '<td>' + '<button  class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
-                    '<td>' + '<button onclick="deleteReport(' + i + ',' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>' + '</td>' +
-                    '</tr>';
-                reportTable.row.add([
-                    postID = doc.data().report[i].userID,
-                    userName = doc.data().report[i].userName,
-                    like = doc.data().report[i].content,
-                    comment = doc.data().report[i].time
-                ]).draw();
-                table.insertAdjacentHTML('beforeend', row);
-                console.log("document customdata foo: " + doc.data().report[i].content);
+postRef.get().then(function (doc) {
+    if (doc.exists) {
+        reportRef = db.collection("Report").where('postID', '==', doc.data().postID);
+        console.log("Document data:", doc.data());
+        $(document).ready(function () {
+            var source = $("#load-post-detail").html();
+            var template = Handlebars.compile(source);
+            var context = {
+                urlImage: doc.data().urlImage,
+                title: doc.data().title,
+                userID: doc.data().userID,
+                userName: doc.data().userName,
+                postID: doc.data().postID,
+                dateCreate: doc.data().dateCreate
             }
-        });
-        $(document).ready(function() {
-            var table = $('#reporttable').DataTable();
-
-            $('#reporttable tbody').on('click', 'tr', function() {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                } else {
-                    table.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
+            var el_html = template(context);
+            $("#post-detail-panel-div").html(el_html);
+        })
+        //get report
+        var reportTable = $("#reporttable").DataTable();
+        reportRef.get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                console.log("Document data:", doc.data());
+                var i = 0;
+                for (i = 0; i < doc.data().report.length; i++) {
+                    var table = document.getElementById("listreport");
+                    var rows = '<tr>' +
+                        '<td>' + doc.data().report[i].userID + '</td>' +
+                        '<td>' + doc.data().report[i].userName + '</td>' +
+                        '<td>' + doc.data().report[i].content + '</td>' +
+                        '<td>' + doc.data().report[i].time + '</td>' +
+                        '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
+                        '<td>' + '<button onclick="deleteReport(' + i + ',' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>' + '</td>' +
+                        '</tr>';
+                    reportTable.row.add([
+                        postID = doc.data().report[i].userID,
+                        userName = doc.data().report[i].userName,
+                        like = doc.data().report[i].content,
+                        comment = doc.data().report[i].time,
+                        approval = '<button class="btn btn-default" style="border-color: RED; color: red">Approval</button>',
+                        cancel = '<button onclick="deleteReport(' + i + ',' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>'
+                    ]).draw(true);
+                    // table.insertAdjacentHTML('beforeend', rows);
+                    console.log("document customdata foo: " + doc.data().report[i].content);
                 }
             });
 
-            $('#button').click(function() {
-                table.row('.selected').remove().draw(false);
+            $(document).ready(function () {
+                var table = $('#reporttable').DataTable();
+
+                $('#reporttable tbody').on('click', 'tr', function () {
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
+                    } else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                });
+
+                $('#button').click(function () {
+                    table.row('.selected').remove().draw(false);
+                });
             });
-        });
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    })
+        })
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function (error) {
+    console.log("Error getting document:", error);
+});
 
 // $('#reporttable').dataTable();
-
-
 
 function deleteReport(index, docID) {
     var indexOfReport = index;
     if (confirm("Are you sure you want to delete this report? " + index + " " + docID)) {
-        db.collection("Report").doc(docID).collection("report").delete().then(function () {
-            console.log("Document successfully deleted! ");
+        var smallReportRef = db.collection("Report").doc(docID);
+        smallReportRef.update({
+            report: firebase.firestore.FieldValue.arrayRemove(0)
         });
 
+        // smallReportRef.update({
+
+        // })
+
+        // smallReportRef.update({
+        //     // report : firebase.firestore.FieldValue.arrayRemove(0)
+        // })
+        console.log("done");
     } else {
         console.log("Why!!!")
         return false;
@@ -116,10 +121,10 @@ function deleteReport(index, docID) {
 }
 
 function deletePost() {
-    if (confirm("Are you sure you want to delete this Post? : " + postID)) {
-        db.collection("Post").doc(postID).delete().then(function () {  
+    if (confirm("Are you sure you want to delete this Post? : ")) {
+        db.collection("Post").doc(docID).delete().then(function () {
             console.log("Document successfully deleted!");
-            window.location.href = "table-posts.html";
+            window.location.href = "table-post";
         }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
