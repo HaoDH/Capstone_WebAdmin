@@ -7,24 +7,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 app.get('/', function (req, res) {
-    if (sess.email) {
-        /*
-        * This line check Session existence.
-        * If it existed will do some action.
-        */
-        res.redirect('/');
-    }
-    else {
-        res.render('login.html');
-    }
-    // res.sendFile(__dirname + '/index.html');
-});
-app.post('/login', function (req, res) {
-    sess = req.session;
-    //In this we are assigning email to sess.email variable.
-    //email comes from HTML page.
-    sess.email = req.body.email;
-    res.end('done');
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/index.html', function (req, res) {
