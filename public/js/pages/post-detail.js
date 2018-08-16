@@ -22,30 +22,31 @@ var docID = getUrlParameter('docID');
 var reportRef;
 console.log(docID);
 
-var postRef = db.collection("Post").doc(docID); 4
+var postRef = db.collection("Post").doc(docID);
+4
 
-postRef.get().then(function (doc) {
+postRef.get().then(function(doc) {
     if (doc.exists) {
         reportRef = db.collection("Report").where('postID', '==', doc.data().postID);
         console.log("Document data:", doc.data());
-        $(document).ready(function () {
-            var source = $("#load-post-detail").html();
-            var template = Handlebars.compile(source);
-            var context = {
-                urlImage: doc.data().urlImage,
-                title: doc.data().title,
-                userID: doc.data().userID,
-                userName: doc.data().userName,
-                postID: doc.data().postID,
-                dateCreate: doc.data().dateCreate
-            }
-            var el_html = template(context);
-            $("#post-detail-panel-div").html(el_html);
-        })
-        //get report
+        $(document).ready(function() {
+                var source = $("#load-post-detail").html();
+                var template = Handlebars.compile(source);
+                var context = {
+                    urlImage: doc.data().urlImage,
+                    title: doc.data().title,
+                    userID: doc.data().userID,
+                    userName: doc.data().userName,
+                    postID: doc.data().postID,
+                    dateCreate: doc.data().dateCreate
+                }
+                var el_html = template(context);
+                $("#post-detail-panel-div").html(el_html);
+            })
+            //get report
         var reportTable = $("#reporttable").DataTable();
-        reportRef.get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
+        reportRef.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
                 console.log("Document data:", doc.data());
                 var i = 0;
                 for (i = 0; i < doc.data().report.length; i++) {
@@ -71,10 +72,10 @@ postRef.get().then(function (doc) {
                 }
             });
 
-            $(document).ready(function () {
+            $(document).ready(function() {
                 var table = $('#reporttable').DataTable();
 
-                $('#reporttable tbody').on('click', 'tr', function () {
+                $('#reporttable tbody').on('click', 'tr', function() {
                     if ($(this).hasClass('selected')) {
                         $(this).removeClass('selected');
                     } else {
@@ -83,7 +84,7 @@ postRef.get().then(function (doc) {
                     }
                 });
 
-                $('#button').click(function () {
+                $('#button').click(function() {
                     table.row('.selected').remove().draw(false);
                 });
             });
@@ -92,7 +93,7 @@ postRef.get().then(function (doc) {
         // doc.data() will be undefined in this case
         console.log("No such document!");
     }
-}).catch(function (error) {
+}).catch(function(error) {
     console.log("Error getting document:", error);
 });
 
@@ -106,13 +107,6 @@ function deleteReport(index, docID) {
             report: firebase.firestore.FieldValue.arrayRemove(0)
         });
 
-        // smallReportRef.update({
-
-        // })
-
-        // smallReportRef.update({
-        //     // report : firebase.firestore.FieldValue.arrayRemove(0)
-        // })
         console.log("done");
     } else {
         console.log("Why!!!")
@@ -122,10 +116,10 @@ function deleteReport(index, docID) {
 
 function deletePost() {
     if (confirm("Are you sure you want to delete this Post? : ")) {
-        db.collection("Post").doc(docID).delete().then(function () {
+        db.collection("Post").doc(docID).delete().then(function() {
             console.log("Document successfully deleted!");
             window.location.href = "table-post";
-        }).catch(function (error) {
+        }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
     } else {
@@ -146,4 +140,3 @@ function deletePost() {
 //         return false;
 //     }
 // }
-

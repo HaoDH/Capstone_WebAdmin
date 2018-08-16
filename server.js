@@ -1,9 +1,9 @@
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 3030;
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 
 var admin = require('firebase-admin');
 var FieldValue = require('firebase-admin').FieldValue;
@@ -11,14 +11,14 @@ var FieldValue = require('firebase-admin').FieldValue;
 var serviceAccount = require('./config/capstone-project-1d078-firebase-adminsdk-t8mf6-6a88e2c987.json');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://capstone-project-1d078.firebaseio.com'
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://capstone-project-1d078.firebaseio.com'
 });
-  
-var morgan       = require('morgan');
+
+var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var configDB = require('./config/database.js');
 
@@ -34,10 +34,10 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs'); // chỉ định view engine là ejs
 
-app.use(session({ secret: 'xxxxxxxxxxxxx' })); 
+app.use(session({ secret: 'xxxxxxxxxxxxx' }));
 app.use(passport.initialize());
-app.use(passport.session()); 
-app.use(flash()); 
+app.use(passport.session());
+app.use(flash());
 
 require('./app/routes.js')(app, passport); // load các routes từ các nguồn
 
