@@ -10,7 +10,7 @@
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Cook & Share - Post Detail</title>
+    <title>Cook & Share - Posts Database</title>
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
@@ -19,6 +19,9 @@
     <link href="plugins/icomoon/style.css" rel="stylesheet">
     <link href="plugins/uniform/css/default.css" rel="stylesheet" />
     <link href="plugins/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="plugins/datatables/css/jquery.datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/datatables/css/jquery.datatables_themeroller.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css" />
 
     <!-- Theme Styles -->
     <link href="css/space.min.css" rel="stylesheet">
@@ -43,7 +46,8 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script src="js/pages/post-detail.js"></script>
+    <!-- Javascripts -->
+    <script src="js/pages/youtube.js"></script>
 </head>
 
 <body>
@@ -53,7 +57,7 @@
         <div class="page-sidebar">
             <a class="logo-box" href="/">
                 <span>Space</span>
-                 <!-- <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i> -->
+                <!-- <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i> -->
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
             </a>
             <div class="page-sidebar-inner">
@@ -65,7 +69,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="active-page">
                             <a href="youtube">
                                 <i class="menu-icon icon-inbox"></i>
                                 <span>Youtube</span>
@@ -82,7 +86,7 @@
                                 <li><a href="annual-report">Annual</a></li>
                             </ul>
                         </li>
-                        <li class="active-page">
+                        <li>
                             <a href="javascript:void(0);">
                                 <i class="menu-icon icon-format_list_bulleted"></i>
                                 <span>Data</span>
@@ -90,7 +94,7 @@
                             </a>
                             <ul class="sub-menu">
                                 <li><a href="table-user">Users</a></li>
-                                <li><a href="table-post" class="active">Posts</a></li>
+                                <li><a href="table-post">Posts</a></li>
                                 <li><a href="table-report">Reports</a></li>
                             </ul>
                         </li>
@@ -100,7 +104,7 @@
                                 <span>Charts</span>
                             </a>
                         </li>
-                        
+
                         <li class="menu-divider"></li>
                         <li>
                             <a href="/">
@@ -154,7 +158,9 @@
                                 <i class="fa fa-angle-down"></i>
                             </button>
                         </div>
+
                         <!-- Collect the nav links, forms, and other content for toggling -->
+
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
                                 <li>
@@ -167,9 +173,10 @@
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </li>
+
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                            
+
                                 <li class="dropdown user-dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                         <img src="http://via.placeholder.com/36x36" alt="" class="img-circle">
@@ -189,104 +196,85 @@
             </div>
             <!-- /Page Header -->
             <!-- Page Inner -->
-            <div class="page-inner no-page-title">
+            <div class="page-inner">
+                <div class="page-title">
+                    <h3 class="breadcrumb-header">Youtube - Tips and Tricks</h3>
+                </div>
                 <div id="main-wrapper">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12">
                             <div class="panel panel-white">
                                 <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">Post Detail</h4>
-                                </div>
-                                <div class="panel-body user-profile-panel" id="post-detail-panel-div">
-                                    <script id="load-post-detail" type="text/x-handlebars-template">
-                                        <img src="{{{urlImage}}}" class="user-profile-image img-circle" alt="">
-                                        <h4 class="text-center m-t-lg">{{title}}</h4>
-                                        <p class="text-center">{{postID}}</p>
-                                        <hr>
-                                        <ul class="list-unstyled text-center">
-                                            <li>
-                                                <p><i class="fa fa-user m-r-xs"></i>User: {{userName}}</p>
-                                            </li>
-                                            <li>
-                                                <p><i class="fa ffa-id-card-o m-r-xs"></i>{{userID}}</p>
-                                            </li>
-                                            <li>
-                                                <p><i class="fa fa-calendar m-r-xs"></i>{{dateCreate}}</p>
-                                            </li>
-                                        </ul>
-                                        <hr>
-                                        <button class="btn btn-block" onclick="deletePost()" style="color: #fff; background-color: crimson; border-color: crimson" id="btn-delete">Delete</button>
-                                    </script>
-
-                                </div>
-                            </div>
-                            <div class="panel panel-white">
-                                <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">Some Info</h4>
+                                    <h4 class="panel-title">Upload</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <p>Integer tincidunt varius nulla, vitae facilisis nibh ornare dignissim. Morbi in orci
-                                        vitae magna vestibulum placerat at vel augue. Pellentesque rutrum ipsum eget odio
-                                    </p>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Title</label>
+                                        <input type="text" class="form-control" id="titleYoutube" placeholder="Title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Youtube Code</label>
+                                        <input type="text" class="form-control" id="codeYoutube" placeholder="Youtube Code">
+                                    </div>
+                                    <button onclick="uploadYoutube()" id="btn-youtube" class="btn btn-primary">Upload</button>
                                 </div>
                             </div>
                         </div>
-                        <div id="main-wrapper">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="profile-timeline">
-                                        <ul class="list-unstyled">
-                                            <li class="timeline-item">
-                                                <div class="panel panel-white">
-                                                    <div class="panel-heading clearfix">
-                                                        <h4 class="panel-title">Report Table</h4>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="table-responsive">
-                                                            <table id="reporttable" class="display table" style="width: 100%; cellspacing: 0;">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>User ID</th>
-                                                                        <th>User Name</th>
-                                                                        <th>Content</th>
-                                                                        <th>Time</th>
-                                                                        <th>Approval</th>
-                                                                        <th>Cancel</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody id="listreport">
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                    </div>
+                    <!-- Row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-white">
+                                <div class="panel-heading clearfix">
+                                    <h4 class="panel-title">List youtube</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table id="youtube-table" class="display table" style="width: 100%; cellspacing: 0;">
+                                            <thead>
+                                                <tr>
+                                                    <th id="docID">Doc ID</th>
+                                                    <th>Tip ID</th>
+                                                    <th>Title</th>
+                                                    <th>Youtube Code</th>
+                                                    <th>Time</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="list-youtube">
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- Row -->
                 </div>
                 <!-- Main Wrapper -->
                 <div class="page-footer">
-                  
                 </div>
             </div>
             <!-- /Page Inner -->
+            <div class="page-right-sidebar" id="main-right-sidebar">
+                <div class="page-right-sidebar-inner">
+                    <div class="right-sidebar-top">
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /Page Content -->
     </div>
     <!-- /Page Container -->
-    <!-- Javascripts -->
 
+
+    <!-- Javascripts -->
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
     <script src="plugins/switchery/switchery.min.js"></script>
     <script src="plugins/datatables/js/jquery.datatables.min.js"></script>
+    <script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="js/space.min.js"></script>
     <script src="js/pages/table-data.js"></script>
 </body>

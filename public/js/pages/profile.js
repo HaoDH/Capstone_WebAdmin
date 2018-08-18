@@ -36,6 +36,30 @@ userRef.get().then(function (doc) {
             }
             var el_html = template(context);
             $("#profile-panel-div").html(el_html);
+
+        })
+        var boolStatus = doc.data().status;
+        var status;
+        if (boolStatus == true || boolStatus == null) {
+            status = "Actived";
+        } else {
+            status = "Locked";
+        }
+        $(document).ready(function () {
+            var postOfUser = 0;
+            db.collection("Post").where('userID', '==', doc.data().userID)
+                .get().then(function (querySnapshot) {
+                    postOfUser = querySnapshot.size;
+                    var source = $("#more-info-profile").html();
+                    var template = Handlebars.compile(source);
+                    var context = {
+                        status: status,
+                        posts: postOfUser
+                    }
+                    var el_html = template(context);
+                    $("#more-info-user").html(el_html);
+                });
+           
         })
 
         //Load list post of user
@@ -47,19 +71,22 @@ userRef.get().then(function (doc) {
                 querySnapshot.forEach(function (doc) {
                     console.log(doc.data());
                     var table = document.getElementById("listpostofuser");
-
+                    var map = doc.data();
+                    var date = new Date(map.postTime);
+                    var n = date.toLocaleString();
+                    console.log("postTime: " + n);
                     var row = '<tr>' +
-                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
-                        '<td>' + doc.data().difficult + '</td>' +
+                        '<td>' + n + '</td>' +
                         '<td style = "overflow:hidden; white-space:nowrap">' + doc.data().description + '</td>' +
                         '</tr>';
                     userPostTable.row.add([
-                        postID = doc.data().postID,
+                        docID = doc.id,
                         like = doc.data().like,
                         comment = doc.data().comment,
-                        difficult = doc.data().difficult,
+                        time = n,
                         description = doc.data().description
                     ]).draw();
                     console.log("DATATABLE: " + userPostTable.length);
@@ -81,12 +108,24 @@ userRef.get().then(function (doc) {
                         userPostTable.row('.selected').remove().draw(false);
                     });
                 });
+                $('#posttableofuser').DataTable({
+                    "destroy": true,
+                    "jQueryUI": true,
+                    "pagingType": "full_numbers",
+                    "columnDefs": [{
+                        "targets": 0,
+                        "render": function (data, type, row) {
+                            if (type === "display") {
+                                return "<a href=\"post-detail?docID=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            }
+                            return data;
+                        }
+                    }]
+                });
             }).catch(function (error) {
                 console.log("Error getting documents: ", error);
             })
-
-            //end
-
+        //end
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -94,7 +133,6 @@ userRef.get().then(function (doc) {
 }).catch(function (error) {
     console.log("Error getting document:", error);
 });
-
 // Lock button
 function lockUser() {
     if (confirm("Are you sure you want to delete this user?")) {
@@ -112,3 +150,4 @@ function lockUser() {
         return false;
     }
 }
+

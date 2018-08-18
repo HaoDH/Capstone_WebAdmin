@@ -71,7 +71,6 @@ postRef.get().then(function(doc) {
                     console.log("document customdata foo: " + doc.data().report[i].content);
                 }
             });
-
             $(document).ready(function() {
                 var table = $('#reporttable').DataTable();
 
@@ -103,11 +102,10 @@ function deleteReport(index, docID) {
     var indexOfReport = index;
     if (confirm("Are you sure you want to delete this report? " + index + " " + docID)) {
         var smallReportRef = db.collection("Report").doc(docID);
-        smallReportRef.update({
-            report: firebase.firestore.FieldValue.arrayRemove(0)
-        });
-
-        console.log("done");
+        var array;
+        var hashMap = new Object;
+        array = smallReportRef.report;
+        console.log(typeof(array));
     } else {
         console.log("Why!!!")
         return false;
@@ -127,16 +125,3 @@ function deletePost() {
         return false;
     }
 }
-
-// function deletePost() {
-//     if (confirm("Are you sure you want to delete this Post? : " + postID)) {
-//         var postRef = db.collection("Post").doc(postID);
-//         var removeCapital = postRef.update({
-//             capital: firebase.firestore.FieldValue.delete()
-//         });  
-//         window.location.href = "table-posts.html";  
-//     } else {
-//         console.log("Why!!!")
-//         return false;
-//     }
-// }

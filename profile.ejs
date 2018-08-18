@@ -54,7 +54,7 @@
         <div class="page-sidebar">
             <a class="logo-box" href="/">
                 <span>Space</span>
-                 <!-- <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i> -->
+                <!-- <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i> -->
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
             </a>
             <div class="page-sidebar-inner">
@@ -67,9 +67,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="email">
+                            <a href="youtube">
                                 <i class="menu-icon icon-inbox"></i>
-                                <span>Email</span>
+                                <span>Youtube</span>
                             </a>
                         </li>
                         <li>
@@ -80,7 +80,7 @@
                                 <li><a href="daily-report">Daily</a></li>
                                 <li><a href="weekly-report">Weekly</a></li>
                                 <li><a href="monthly-report">Monthly</a></li>
-                                <li><a href="annu-report">Annual</a></li>
+                                <li><a href="annual-report">Annual</a></li>
                             </ul>
                         </li>
                         <li>
@@ -98,21 +98,21 @@
                                 <i class="menu-icon icon-show_chart"></i>
                                 <span>Charts</span>
                             </a>
-                      
-                        <li class="menu-divider"></li>
-                        <li>
-                            <a href="/">
-                                <i class="menu-icon icon-help_outline"></i>
-                                <span>About</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/">
-                                <i class="menu-icon icon-public"></i>
-                                <span>Changelog</span>
-                                <span class="label label-danger">1.0</span>
-                            </a>
-                        </li>
+
+                            <li class="menu-divider"></li>
+                            <li>
+                                <a href="/">
+                                    <i class="menu-icon icon-help_outline"></i>
+                                    <span>About</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/">
+                                    <i class="menu-icon icon-public"></i>
+                                    <span>Changelog</span>
+                                    <span class="label label-danger">1.0</span>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -147,7 +147,8 @@
                                     <span>Space</span>
                                 </a>
                             </div>
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                                aria-expanded="false">
                                 <i class="fa fa-angle-down"></i>
                             </button>
                         </div>
@@ -173,7 +174,7 @@
                                         <img src="http://via.placeholder.com/36x36" alt="" class="img-circle">
                                     </a>
                                     <ul class="dropdown-menu">
-                                       
+
                                         <li>
                                             <a href="/logout">Log Out</a>
                                         </li>
@@ -219,19 +220,25 @@
 
                                 </div>
                             </div>
+
                             <div class="panel panel-white">
                                 <div class="panel-heading clearfix">
                                     <h4 class="panel-title">Some Info</h4>
                                 </div>
-                                <div class="panel-body">
-                                    <p>Integer tincidunt varius nulla, vitae facilisis nibh ornare dignissim. Morbi in orci vitae magna vestibulum placerat at vel augue. Pellentesque rutrum ipsum eget odio</p>
+                                <div class="panel-body" id="more-info-user">
+                                    <script id="more-info-profile" type="text/x-handlebars-template">
+                                    <p>
+                                        Status: {{status}}<hr>
+                                        Posts:  {{posts}}
+                                    </p>
+                                    </script>
                                 </div>
                             </div>
                         </div>
                         <div id="main-wrapper">
-                                <div class="row">
-                        <div class="col-md-8">
-                                <div class="profile-timeline">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="profile-timeline">
                                         <ul class="list-unstyled">
                                             <li class="timeline-item">
                                                 <div class="panel panel-white">
@@ -240,10 +247,10 @@
                                                             <table id="posttableofuser" class="table table-bordered" style="width: 100%; cellspacing: 0;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Post ID</th>
+                                                                        <th>Doc ID</th>
                                                                         <th>Like</th>
                                                                         <th>Comment</th>
-                                                                        <th>Difficult</th>
+                                                                        <th>Time</th>
                                                                         <th>Description</th>
                                                                     </tr>
                                                                 </thead>
@@ -258,13 +265,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     <!-- Row -->
                 </div>
                 <!-- Main Wrapper -->
                 <div class="page-footer">
-                  
+
                 </div>
             </div>
             <!-- /Page Inner -->
@@ -289,103 +296,8 @@
                     <div class="right-sidebar-content">
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="chat">
-                                <div class="chat-list">
-                                    <span class="chat-title">Recent</span>
-                                    <a href="javascript:void(0);" class="right-sidebar-toggle chat-item unread" data-sidebar-id="chat-right-sidebar">
-                                        <div class="user-avatar">
-                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                        </div>
-                                        <div class="chat-info">
-                                            <span class="chat-author">David</span>
-                                            <span class="chat-text">where u at?</span>
-                                            <span class="chat-time">08:50</span>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="right-sidebar-toggle chat-item unread active-user" data-sidebar-id="chat-right-sidebar">
-                                        <div class="user-avatar">
-                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                        </div>
-                                        <div class="chat-info">
-                                            <span class="chat-author">Daisy</span>
-                                            <span class="chat-text">Daisy sent a photo.</span>
-                                            <span class="chat-time">11:34</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="chat-list">
-                                    <span class="chat-title">Older</span>
-                                    <a href="javascript:void(0);" class="right-sidebar-toggle chat-item" data-sidebar-id="chat-right-sidebar">
-                                        <div class="user-avatar">
-                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                        </div>
-                                        <div class="chat-info">
-                                            <span class="chat-author">Tom</span>
-                                            <span class="chat-text">You: ok</span>
-                                            <span class="chat-time">2d</span>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="right-sidebar-toggle chat-item active-user" data-sidebar-id="chat-right-sidebar">
-                                        <div class="user-avatar">
-                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                        </div>
-                                        <div class="chat-info">
-                                            <span class="chat-author">Anna</span>
-                                            <span class="chat-text">asdasdasd</span>
-                                            <span class="chat-time">4d</span>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="right-sidebar-toggle chat-item active-user" data-sidebar-id="chat-right-sidebar">
-                                        <div class="user-avatar">
-                                            <img src="http://via.placeholder.com/40x40" alt="">
-                                        </div>
-                                        <div class="chat-info">
-                                            <span class="chat-author">Liza</span>
-                                            <span class="chat-text">asdasdasd</span>
-                                            <span class="chat-time">&nbsp;</span>
-                                        </div>
-                                    </a>
-                                    <a href="javascript:void(0);" class="load-more-messages" data-toggle="tooltip" data-placement="bottom" title="Load More">&bull;&bull;&bull;</a>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="settings">
-                                <div class="right-sidebar-settings">
-                                    <span class="settings-title">General Settings</span>
-                                    <ul class="sidebar-setting-list list-unstyled">
-                                        <li>
-                                            <span class="settings-option">Notifications</span>
-                                            <input type="checkbox" class="js-switch" checked />
-                                        </li>
-                                        <li>
-                                            <span class="settings-option">Activity log</span>
-                                            <input type="checkbox" class="js-switch" checked />
-                                        </li>
-                                        <li>
-                                            <span class="settings-option">Automatic updates</span>
-                                            <input type="checkbox" class="js-switch" />
-                                        </li>
-                                        <li>
-                                            <span class="settings-option">Allow backups</span>
-                                            <input type="checkbox" class="js-switch" />
-                                        </li>
-                                    </ul>
-                                    <span class="settings-title">Account Settings</span>
-                                    <ul class="sidebar-setting-list list-unstyled">
-                                        <li>
-                                            <span class="settings-option">Chat</span>
-                                            <input type="checkbox" class="js-switch" checked />
-                                        </li>
-                                        <li>
-                                            <span class="settings-option">Incognito mode</span>
-                                            <input type="checkbox" class="js-switch" />
-                                        </li>
-                                        <li>
-                                            <span class="settings-option">Public profile</span>
-                                            <input type="checkbox" class="js-switch" />
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -401,45 +313,7 @@
                             <i class="icon-keyboard_arrow_right"></i>
                         </a>
                     </div>
-                    <div class="right-sidebar-content">
-                        <div class="right-sidebar-chat slimscroll">
-                            <div class="chat-bubbles">
-                                <div class="chat-start-date">02/06/2017 5:58PM</div>
-                                <div class="chat-bubble them">
-                                    <div class="chat-bubble-img-container">
-                                        <img src="http://via.placeholder.com/38x38" alt="">
-                                    </div>
-                                    <div class="chat-bubble-text-container">
-                                        <span class="chat-bubble-text">Hello</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble me">
-                                    <div class="chat-bubble-text-container">
-                                        <span class="chat-bubble-text">Hello!</span>
-                                    </div>
-                                </div>
-                                <div class="chat-start-date">03/06/2017 4:22AM</div>
-                                <div class="chat-bubble me">
-                                    <div class="chat-bubble-text-container">
-                                        <span class="chat-bubble-text">lorem</span>
-                                    </div>
-                                </div>
-                                <div class="chat-bubble them">
-                                    <div class="chat-bubble-img-container">
-                                        <img src="http://via.placeholder.com/38x38" alt="">
-                                    </div>
-                                    <div class="chat-bubble-text-container">
-                                        <span class="chat-bubble-text">ipsum dolor sit amet</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat-write">
-                            <form class="form-horizontal" action="javascript:void(0);">
-                                <input type="text" class="form-control" placeholder="Say something">
-                            </form>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
