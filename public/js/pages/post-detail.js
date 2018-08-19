@@ -20,92 +20,79 @@ function getUrlParameter(sParam) {
 };
 var docID = getUrlParameter('docID');
 var reportRef;
-console.log(docID);
-
 var postRef = db.collection("Post").doc(docID);
-4
-
-postRef.get().then(function(doc) {
+var reportID;
+postRef.get().then(function (doc) {
     if (doc.exists) {
         reportRef = db.collection("Report").where('postID', '==', doc.data().postID);
-        console.log("Document data:", doc.data());
-        $(document).ready(function() {
-                var source = $("#load-post-detail").html();
-                var template = Handlebars.compile(source);
-                var context = {
-                    urlImage: doc.data().urlImage,
-                    title: doc.data().title,
-                    userID: doc.data().userID,
-                    userName: doc.data().userName,
-                    postID: doc.data().postID,
-                    dateCreate: doc.data().dateCreate
-                }
-                var el_html = template(context);
-                $("#post-detail-panel-div").html(el_html);
-            })
-            //get report
-        var reportTable = $("#reporttable").DataTable();
-        reportRef.get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                console.log("Document data:", doc.data());
-                var i = 0;
-                for (i = 0; i < doc.data().report.length; i++) {
-                    var table = document.getElementById("listreport");
-                    var rows = '<tr>' +
-                        '<td>' + doc.data().report[i].userID + '</td>' +
-                        '<td>' + doc.data().report[i].userName + '</td>' +
-                        '<td>' + doc.data().report[i].content + '</td>' +
-                        '<td>' + doc.data().report[i].time + '</td>' +
-                        '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
-                        '<td>' + '<button onclick="deleteReport(' + i + ',' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>' + '</td>' +
-                        '</tr>';
-                    reportTable.row.add([
-                        postID = doc.data().report[i].userID,
-                        userName = doc.data().report[i].userName,
-                        like = doc.data().report[i].content,
-                        comment = doc.data().report[i].time,
-                        approval = '<button class="btn btn-default" style="border-color: RED; color: red">Approval</button>',
-                        cancel = '<button onclick="deleteReport(' + i + ',' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>'
-                    ]).draw(true);
-                    // table.insertAdjacentHTML('beforeend', rows);
-                    console.log("document customdata foo: " + doc.data().report[i].content);
-                }
-            });
-            $(document).ready(function() {
-                var table = $('#reporttable').DataTable();
-
-                $('#reporttable tbody').on('click', 'tr', function() {
-                    if ($(this).hasClass('selected')) {
-                        $(this).removeClass('selected');
-                    } else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-                    }
-                });
-
-                $('#button').click(function() {
-                    table.row('.selected').remove().draw(false);
-                });
-            });
+        $(document).ready(function () {
+            var source = $("#load-post-detail").html();
+            var template = Handlebars.compile(source);
+            var context = {
+                urlImage: doc.data().urlImage,
+                title: doc.data().title,
+                userID: doc.data().userID,
+                userName: doc.data().userName,
+                postID: doc.data().postID,
+                dateCreate: doc.data().dateCreate
+            }
+            var el_html = template(context);
+            $("#post-detail-panel-div").html(el_html);
         })
+        //get report
+        var reportTable = $("#reporttable").DataTable();
+        try {
+            reportRef.get().then(function (querySnapshot) {
+                querySnapshot.forEach(function (doc) {
+                    reportID = doc.id;
+                    console.log("reportDocID: " + doc.id);
+                    var report_2 = db.collection("Report").doc(doc.id).collection("listreport");
+                    report_2.get().then(function (querySnapshot) {
+                        console.log("Report size: " + querySnapshot.size);
+                        querySnapshot.forEach(function (doc) {
+                            var table = document.getElementById("listreport");
+                            var rows = '<tr>' +
+                                '<td>' + doc.data().userID + '</td>' +
+                                '<td>' + doc.data().userName + '</td>' +
+                                '<td>' + doc.data().content + '</td>' +
+                                '<td>' + doc.data().time + '</td>' +
+                                '<td>' + '<button onclick="addApproval(' + "'" + docID + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
+                                '<td>' + '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>' + '</td>' +
+                                '</tr>';
+                            reportTable.row.add([
+                                postID = doc.data().userID,
+                                userName = doc.data().userName,
+                                like = doc.data().content,
+                                comment = doc.data().time,
+                                approval = '<button onclick="addApproval(' + "'" + docID + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>',
+                                cancel = '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>'
+                            ]).draw(true);
+                            // table.insertAdjacentHTML('beforeend', rows);
+                        })
+                    })
+                })
+            })
+        } catch (error) {
+            console.log("Data error: " + error);
+        }
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
     }
-}).catch(function(error) {
+}).catch(function (error) {
     console.log("Error getting document:", error);
 });
 
 // $('#reporttable').dataTable();
 
-function deleteReport(index, docID) {
-    var indexOfReport = index;
-    if (confirm("Are you sure you want to delete this report? " + index + " " + docID)) {
-        var smallReportRef = db.collection("Report").doc(docID);
-        var array;
-        var hashMap = new Object;
-        array = smallReportRef.report;
-        console.log(typeof(array));
+function deleteReport(docID) {
+    if (confirm("Are you sure you want to delete this report? " + docID)) {
+        db.collection("Report").doc(reportID).collection("listreport").doc(docID).delete().then(function () {
+            console.log("Document successfully deleted!");
+            location.reload();
+        }).catch(function (error) {
+            console.error("Error removing document: ", error);
+        });
     } else {
         console.log("Why!!!")
         return false;
@@ -113,15 +100,34 @@ function deleteReport(index, docID) {
 }
 
 function deletePost() {
-    if (confirm("Are you sure you want to delete this Post? : ")) {
-        db.collection("Post").doc(docID).delete().then(function() {
+    if (confirm("Are you sure you want to delete this Post?")) {
+        db.collection("Post").doc(docID).delete().then(function () {
             console.log("Document successfully deleted!");
             window.location.href = "table-post";
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
     } else {
         console.log("Why!!!")
         return false;
     }
+}
+
+function addApproval(docID) {
+    if (confirm("Are you sure you want to approval this report?")) {
+        try {
+            db.collection("Post").doc(docID).update({
+                numberReport: numberReport + 1,
+            })
+
+        } catch (error) {
+            db.collection("Post").doc(docID).update({
+                numberReport: 1,
+            })
+        }
+    } else {
+        console.log("Why!!!")
+        return false;
+    }
+
 }

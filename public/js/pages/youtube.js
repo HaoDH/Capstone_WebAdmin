@@ -42,7 +42,7 @@ youtubeDB.get().then(function (querySnapshot) {
             '<td>' + doc.data().title + '</td>' +
             '<td>' + doc.data().youtubeUrl + '</td>' +
             '<td>' + doc.data().timestamp + '</td>' +
-            '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red" onclick="deleteVideo(' + "'" + doc.id + "'" + ')" class="btn btn-default">Delete</button>' + '</td>' + 
+            '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red" onclick="deleteVideo(' + "'" + doc.id + "'" + ')" class="btn btn-default">Delete</button>' + '</td>' +
             '</tr>';
         reportTable.row.add([
             docID = doc.id,
@@ -50,7 +50,7 @@ youtubeDB.get().then(function (querySnapshot) {
             title = doc.data().title,
             youtubeCode = doc.data().youtubeUrl,
             timestamp = doc.data().timestamp,
-            cancel = '<button class="btn btn-default" style="border-color: RED; color: red" onclick=deleteVideo(' + doc.id +')" class="btn btn-default">Delete</button>'
+            cancel = '<button class="btn btn-default" style="border-color: RED; color: red" onclick=deleteVideo(' + doc.id + ')" class="btn btn-default">Delete</button>'
         ]).draw();
         table.insertAdjacentHTML('beforeend', rows);
     });
@@ -80,12 +80,12 @@ youtubeDB.get().then(function (querySnapshot) {
     });
 })
 
-function deleteVideo(docID){
+function deleteVideo(docID) {
     if (confirm("Are you sure you want to delete this Post? : ")) {
-        db.collection("Youtube").doc(docID).delete().then(function() {
+        db.collection("Youtube").doc(docID).delete().then(function () {
             console.log("Youtube successfully deleted!");
             window.location.href = "youtube";
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
     } else {

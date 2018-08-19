@@ -59,7 +59,6 @@ userRef.get().then(function (doc) {
                     var el_html = template(context);
                     $("#more-info-user").html(el_html);
                 });
-           
         })
 
         //Load list post of user
@@ -150,4 +149,3 @@ function lockUser() {
         return false;
     }
 }
-

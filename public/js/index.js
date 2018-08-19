@@ -51,14 +51,3 @@ function addData() {
     var paren = document.getElementById("totalpost");
     paren.innerText = size;
 }
-
-function getdhm(timestamp) {
-    var date = Date.parse(timestamp);
-    var month = date.getMonth();
-    var day = date.getDay();
-    var year = date.getYear();
-
-    var formattedTime = month + '/' + day + '/' + year;
-    return formattedTime;
-
-}
