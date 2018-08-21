@@ -86,7 +86,7 @@ userRef.get().then(function (doc) {
                         like = doc.data().like,
                         comment = doc.data().comment,
                         view = doc.data().countView,
-                        time =time,
+                        time = time,
                         title = doc.data().title
                     ]).draw();
                     console.log("DATATABLE: " + userPostTable.length);
@@ -133,18 +133,21 @@ userRef.get().then(function (doc) {
 }).catch(function (error) {
     console.log("Error getting document:", error);
 });
+
 // Lock button
 function lockUser() {
     if (confirm("Are you sure you want to delete this user?")) {
         var user = db.collection("User").doc(docID);
-        return user.update({
-            status: false
-        }).then(function () {
-            console.log("Document successfully updated!");
-        }).catch(function (error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
+        if (user.postRemoved >= 3) {
+            return user.update({
+                status: false
+            }).then(function () {
+                console.log("Document successfully updated!");
+            })
+        }else {
+            window.alert("You can't delete this account!!!");
+            return false;
+        }
     } else {
         console.log("Why!!!")
         return false;

@@ -47,7 +47,7 @@
         firebase.initializeApp(config);
     </script>
     <!-- Javascripts -->
-    <script src="js/table-report.js"></script>
+    <script src="js/pages/table-report.js"></script>
 </head>
 
 <body>
@@ -98,13 +98,6 @@
                                 <li><a href="table-report">Reports</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="charts.html">
-                                <i class="menu-icon icon-show_chart"></i>
-                                <span>Charts</span>
-                            </a>
-                        </li>
-
                         <li class="menu-divider"></li>
                         <li>
                             <a href="/">
@@ -206,28 +199,83 @@
                         <div class="col-md-12">
                             <div class="panel panel-white">
                                 <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">Basic example</h4>
+                                    <h4 class="panel-title">Report</h4>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table id="reporttable" class="display table" style="width: 100%; cellspacing: 0;">
-                                            <thead>
-                                                <tr>
-                                                    <th>Post ID</th>
-                                                    <th>User ID</th>
-                                                    <th>User Name</th>
-                                                    <th>Content</th>
-                                                    <th>Time</th>
-                                                    <th>Approval</th>
-                                                    <th>Cancel</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="listreport">
-                                            </tbody>
-                                        </table>
+                                    <div role="tabpanel">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                                            <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">All
+                                                    Report
+                                                </a></li>
+                                            <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">Approval</a></li>
+                                            <li role="presentation"><a href="#tab23" role="tab" data-toggle="tab">Deleted</a></li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active fade in" id="tab21">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="report-table" class="display table" style="width: 100%; cellspacing: 0;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Doc ID</th>
+                                                                    <th>Post ID</th>
+                                                                    <th>User ID</th>
+                                                                    <th>Status</th>
+                                                                    <th>Content</th>
+                                                                    <th>Time</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="list-report">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab22">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="approval-report-table" class="display table" style="width: 100%; cellspacing: 0;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Doc ID</th>
+                                                                    <th>Post ID</th>
+                                                                    <th>User ID</th>
+                                                                    <th>Status</th>
+                                                                    <th>Content</th>
+                                                                    <th>Time</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="approval-report">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="tab23">
+                                                    <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table id="delete-report-table" class="display table" style="width: 100%; cellspacing: 0;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Doc ID</th>
+                                                                    <th>Post ID</th>
+                                                                    <th>User ID</th>
+                                                                    <th>Status</th>
+                                                                    <th>Content</th>
+                                                                    <th>Time</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="delete-report">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-default m-b-sm" data-toggle="modal">Delete</button>
                             </div>
                         </div>
                     </div>

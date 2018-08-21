@@ -4,58 +4,226 @@ let hash = {};
 
 
 //get data to chart
-db.collection("Post").get().then(function (querySnapshot) {
-    var jan = 0, feb = 0, mar = 0, apr = 0, may = 0, jun = 0, jul = 0, aug = 0, sep = 0, oct = 0, nov = 0, dec = 0;
+function drawPostChart() {
+    db.collection("Post").get().then(function (querySnapshot) {
+        var jan = 0, feb = 0, mar = 0, apr = 0, may = 0, jun = 0, jul = 0, aug = 0, sep = 0, oct = 0, nov = 0, dec = 0;
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var month = new Date(map.postTime);
+
+            if (month.getMonth() == 0) {
+                jan += 1;
+            }
+            if (month.getMonth() == 1) {
+                feb += 1;
+            }
+            if (month.getMonth() == 2) {
+                mar += 1;
+            }
+            if (month.getMonth() == 3) {
+                apr += 1;
+            }
+            if (month.getMonth() == 4) {
+                may += 1;
+            }
+            if (month.getMonth() == 5) {
+                jun += 1;
+            }
+            if (month.getMonth() == 6) {
+                jul += 1;
+            }
+            if (month.getMonth() == 7) {
+                aug += 1;
+            }
+            if (month.getMonth() == 8) {
+                sep += 1;
+            }
+            if (month.getMonth() == 9) {
+                oct += 1;
+            }
+            if (month.getMonth() == 10) {
+                nov += 1;
+            }
+            if (month.getMonth() == 11) {
+                dec += 1;
+            }
+        })
+
+        var ctx = document.getElementById("chart2");
+        var myPostData = [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec];
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"],
+                datasets: [{
+                    label: 'Post',
+                    data: myPostData,
+                    fill: false,
+                    backgroundColor: palette('tol-dv', myPostData.length).map(function (hex) {
+                        return '#' + hex;
+                    }),
+                }]
+            }
+        });
+        // draw chart
+        drawChart();
+
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+
+}
+drawPostChart();
+function drawUserChart() {
+    db.collection("User").get().then(function (querySnapshot) {
+        var jan = 0, feb = 0, mar = 0, apr = 0, may = 0, jun = 0, jul = 0, aug = 0, sep = 0, oct = 0, nov = 0, dec = 0;
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var month = new Date(map.time);
+
+            if (month.getMonth() == 0) {
+                jan += 1;
+            }
+            if (month.getMonth() == 1) {
+                feb += 1;
+            }
+            if (month.getMonth() == 2) {
+                mar += 1;
+            }
+            if (month.getMonth() == 3) {
+                apr += 1;
+            }
+            if (month.getMonth() == 4) {
+                may += 1;
+            }
+            if (month.getMonth() == 5) {
+                jun += 1;
+            }
+            if (month.getMonth() == 6) {
+                jul += 1;
+            }
+            if (month.getMonth() == 7) {
+                aug += 1;
+            }
+            if (month.getMonth() == 8) {
+                sep += 1;
+            }
+            if (month.getMonth() == 9) {
+                oct += 1;
+            }
+            if (month.getMonth() == 10) {
+                nov += 1;
+            }
+            if (month.getMonth() == 11) {
+                dec += 1;
+            }
+        })
+
+        var ctx = document.getElementById("chart1");
+        var myPostData = [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec];
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"],
+                datasets: [{
+                    label: 'User',
+                    data: myPostData,
+                    fill: false,
+                    backgroundColor: palette('tol-dv', myPostData.length).map(function (hex) {
+                        return '#' + hex;
+                    }),
+                    borderColor : "rgb(99, 203, 137)",
+                }]
+            }
+        });
+        // draw chart
+        drawChart();
+
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+
+}
+drawUserChart();
+var postDB = db.collection("Post");
+postDB.get().then(function (querySnapshot) {
+    var newPostInTheDay = 0;
+    var viewPost = 0;
     querySnapshot.forEach(function (doc) {
         var map = doc.data();
-        var month = new Date(map.postTime);
-        
-        if (month.getMonth() == 1) {
-            jan += 1;
+        var dateNow = new Date();
+        var day = new Date(map.postTime);
+        if (day.getFullYear() == dateNow.getFullYear()) {
+            newPostInTheDay = newPostInTheDay + 1;
+            viewPost = viewPost + doc.data().countView;
+        } else {
+            console.log("something happen");
         }
-        if (month.getMonth() == 2) {
-            feb += 1;
+    });
+    var newPost = document.getElementById("new-post-in-the-day");
+    newPost.innerText = newPostInTheDay;
+    var viewDay = document.getElementById("count-view");
+    viewDay.innerText = viewPost;
+})
+    .catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+
+var userDB = db.collection("User");
+userDB.get().then(function (querySnapshot) {
+    var newUserInTheDay = 0;
+    querySnapshot.forEach(function (doc) {
+        var map = doc.data();
+        var dateNow = new Date();
+        var day = new Date(map.time);
+        if (day.getFullYear() == dateNow.getFullYear()) {
+            newUserInTheDay = newUserInTheDay + 1;
+        } else {
+            console.log("something happen");
         }
-        if (month.getMonth() == 3) {
-            mar += 1;
-        }
-        if (month.getMonth() == 4) {
-            apr += 1;
-        }
-        if (month.getMonth() == 5) {
-            may += 1;
-        }
-        if (month.getMonth() == 6) {
-            jun += 1;
-        }
-        if (month.getMonth() == 7) {
-            jul += 1;
-        }
-        if (month.getMonth() == 8) {
-            aug += 1;   
-        }
-        if (month.getMonth() == 9) {
-            sep += 1;
-        }
-        if (month.getMonth() == 10) {
-            oct += 1;
-        }
-        if (month.getMonth() == 11) {
-            nov += 1;
-        }
-        if (month.getMonth() == 12) {
-            dec += 1;
-        }
-    })
-    console.log(jul);
-    // draw chart
+    });
+    var newUser = document.getElementById("new-user-in-the-day");
+    newUser.innerText = newUserInTheDay;
+}).catch(function (error) {
+    console.log("Error getting documents: ", error);
+});
+
+function countNumberOfReported() {
+
+    var reportDB = db.collection("Report");
+
+    reportDB.get().then(function (querySnapshot) {
+        var numberOfReport = 0;
+        var countReport = document.getElementById("count-report");
+        querySnapshot.forEach(function (doc) {
+            reportDB.doc(doc.id).collection("listreport").get().then(function (_querySnapshot) {
+                _querySnapshot.forEach(function (_doc) {
+                    var map = _doc.data();
+                    var dateNow = new Date();
+                    var day = new Date(map.time);
+                    if (day.getFullYear() == dateNow.getFullYear()) {
+                        numberOfReport = numberOfReport + 1;
+                    } else {
+                        console.log("something happen");
+                    }
+                })
+                countReport.innerText = numberOfReport;
+            }).catch(function (error) {
+                console.log("Error getting documents: ", error);
+            });
+        })
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+countNumberOfReported();
+
+function drawChart() {
     $(document).ready(function () {
 
         "use strict";
-        new Chart(document.getElementById("chart1"),{"type":"line","data":{"labels":["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"],"datasets":[{"label":"My First Dataset","data":[jan, feb, mar, apr, may, jun,jul, aug, sep,oct,nov,dec],"fill":false,"borderColor":"rgb(99, 203, 137)","lineTension":0.1}]},"options":{}});
-    
-        new Chart(document.getElementById("chart2"), 
-        { "type": "bar", "data": { "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dev"], "datasets": [{ "label": "Dataset", "data": [jan, feb, mar, apr, may, jun,jul, aug, sep,oct,nov,dec], "fill": false, "backgroundColor": ["rgba(236, 94, 105, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(241, 194, 5, 0.2)", "rgba(99, 203, 137, 0.2)", "rgba(0, 112, 224, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2),"], "borderColor": ["rgb(236, 94, 105)", "rgb(255, 159, 64)", "rgb(241, 194, 5)", "rgb(99, 203, 137)", "rgb(0, 112, 224)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"], "borderWidth": 1 }] }, "options": { "scales": { "yAxes": [{ "ticks": { "beginAtZero": true } }] } } });
+
         var nvddata1 = function () {
             var sin = [],
                 cos = [];
@@ -105,52 +273,4 @@ db.collection("Post").get().then(function (querySnapshot) {
         });
     })
 
-
-}).catch(function (error) {
-    console.log("Error getting documents: ", error);
-});
-
-
-db.collection("Post")
-    .get()
-    .then(function (querySnapshot) {
-        var newPostInTheMonth = 0;
-        querySnapshot.forEach(function (doc) {
-            var map = doc.data();
-            var dateNow = new Date();
-            var month = new Date(map.postTime);
-            if (month.getMonth()  == dateNow.getMonth()) {
-                console.log((month.getMonth()- dateNow.getMonth()));
-                newPostInTheMonth = newPostInTheMonth + 1;
-                console.log("new post: " + newPostInTheMonth);
-            } else {
-                console.log("something happen");
-            } 
-        });
-        var size = querySnapshot.size;
-        var context = document.getElementById("totalpost");
-        context.innerText = size;
-        var newPost = document.getElementById("new-post-in-the-month");
-        newPost.innerText = newPostInTheMonth;
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
-db.collection("User")
-    .get()
-    .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-
-        });
-        var size = querySnapshot.size;
-        var context = document.getElementById("totaluser");
-        context.innerText = size;
-    })
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
-
-function addData() {
-    var paren = document.getElementById("totalpost");
-    paren.innerText = size;
 }

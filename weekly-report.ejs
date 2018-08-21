@@ -66,13 +66,13 @@
                                 <i class="menu-icon icon-inbox"></i><span>Youtube</span>
                             </a>
                         </li>
-                        <li>
+                        <li class="active-page">
                             <a href="javascript:void(0)">
                                 <i class="menu-icon icon-flash_on"></i><span>Report</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul class="sub-menu">
                                 <li><a href="daily-report">Daily</a></li>
-                                <li><a href="weekly-report">Weekly</a></li>
+                                <li><a href="weekly-report" class="active">Weekly</a></li>
                                 <li><a href="monthly-report">Monthly</a></li>
                                 <li><a href="annual-report">Annual</a></li>
                             </ul>
@@ -87,12 +87,6 @@
                                 <li><a href="table-report">Reports</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="charts.html">
-                                <i class="menu-icon icon-show_chart"></i><span>Charts</span>
-                            </a>
-                        </li>
-                       
                         <li class="menu-divider"></li>
                         <li>
                             <a href="/">
@@ -165,16 +159,15 @@
                             <div class="col-lg-3 col-md-6">
                                 <div class="panel panel-white stats-widget">
                                     <div class="panel-body">
+                                        <a href="/table-post?time=weekly">
                                         <div class="pull-left" id="divtotalpost">
-                                            <!-- <script id="load-post" type="text/x-handlebars-template">
-                                                <span class="stats-number" id="totalpost">{{context}}</span>
-                                            </script> -->
-                                            <span class="stats-number" id="totalpost"></span>
-                                            <p class="stats-info">Total Post</p>
+                                            <span class="stats-number" id="new-post-in-the-day"></span>
+                                            <p class="stats-info">New Post</p>
                                         </div>
                                         <div class="pull-right">
-                                            <i class="icon-arrow_upward stats-icon"></i>
+                                            <i class="fa fa-file-text-o fa-4x"></i>
                                         </div>
+                                    </a>
                                     </div>
                                 </div>
                             </div>
@@ -182,12 +175,27 @@
                         <div class="col-lg-3 col-md-6">
                             <div class="panel panel-white stats-widget">
                                 <div class="panel-body">
+                                    <a href="/table-user?time=weekly">
                                     <div class="pull-left">
-                                        <span id="new-post-in-the-month" class="stats-number"></span>
-                                        <p class="stats-info">New Post</p>
+                                        <span id="new-user-in-the-day" class="stats-number"></span>
+                                        <p class="stats-info">New User</p>
                                     </div>
                                     <div class="pull-right">
-                                        <i class="icon-arrow_downward stats-icon"></i>
+                                        <i class="fa fa-user-o fa-4x"></i>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="panel panel-white stats-widget">
+                                <div class="panel-body">
+                                    <div class="pull-left">
+                                        <span class="stats-number" id="count-view"></span>
+                                        <p class="stats-info">View</p>
+                                    </div>
+                                    <div class="pull-right">
+                                        <i class="fa fa-book fa-4x"></i>
                                     </div>
                                 </div>
                             </div>
@@ -196,24 +204,11 @@
                             <div class="panel panel-white stats-widget">
                                 <div class="panel-body">
                                     <div class="pull-left">
-                                        <span class="stats-number" id="totaluser"></span>
-                                        <p class="stats-info">User</p>
-                                    </div>
-                                    <div class="pull-right">
-                                        <i class="icon-arrow_upward stats-icon"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="panel panel-white stats-widget">
-                                <div class="panel-body">
-                                    <div class="pull-left">
-                                        <span class="stats-number" id="total-report"></span>
+                                        <span class="stats-number" id="count-report"></span>
                                         <p class="stats-info">Report</p>
                                     </div>
                                     <div class="pull-right">
-                                        <i class="icon-arrow_upward stats-icon"></i>
+                                        <i class="fa fa-flag-o fa-4x" style="color:red"></i>
                                     </div>
                                 </div>
                             </div>
@@ -263,6 +258,7 @@
     <script src="./plugins/flot/jquery.flot.tooltip.min.js" type="text/javascript"></script>
     <script src="./plugins/flot/jquery.flot.pie.min.js" type="text/javascript"></script>
     <script src="./plugins/chartjs/chart.min.js" type="text/javascript"></script>
+    <script src="./plugins/chartjs/aWapBE.js" type="text/javascript"></script>
     <script src="./js/space.min.js" type="text/javascript"></script>
     <script src="./js/pages/dashboard.js" type="text/javascript"></script>
 </body>
