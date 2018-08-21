@@ -78,38 +78,28 @@ $(document).ready(function() {
 
         var data = [],
             totalPoints = 50;
-
         function getRandomData() {
-
             if (data.length > 0)
                 data = data.slice(1);
-
             // Do a random walk
-
             while (data.length < totalPoints) {
-
                 var prev = data.length > 0 ? data[data.length - 1] : 50,
                     y = prev + Math.random() * 10 - 5;
-
                 if (y < 0) {
                     y = 0;
                 } else if (y > 75) {
                     y = 75;
                 }
-
                 data.push(y);
             }
-
             // Zip the generated y values with the x values
 
             var res = [];
             for (var i = 0; i < data.length; ++i) {
                 res.push([i, data[i]])
             }
-
             return res;
         }
-
         var plot2 = $.plot("#chart2", [getRandomData()], {
             series: {
                 shadowSize: 0 // Drawing is faster without shadows

@@ -72,21 +72,22 @@ userRef.get().then(function (doc) {
                     var table = document.getElementById("listpostofuser");
                     var map = doc.data();
                     var date = new Date(map.postTime);
-                    var n = date.toLocaleString();
-                    console.log("postTime: " + n);
+                    var time = date.toLocaleString();
                     var row = '<tr>' +
                         '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
-                        '<td>' + n + '</td>' +
-                        '<td style = "overflow:hidden; white-space:nowrap">' + doc.data().description + '</td>' +
+                        '<td>' + doc.data().countView + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
                         '</tr>';
                     userPostTable.row.add([
                         docID = doc.id,
                         like = doc.data().like,
                         comment = doc.data().comment,
-                        time = n,
-                        description = doc.data().description
+                        view = doc.data().countView,
+                        time =time,
+                        title = doc.data().title
                     ]).draw();
                     console.log("DATATABLE: " + userPostTable.length);
                     table.insertAdjacentHTML('beforeend', row);

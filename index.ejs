@@ -167,16 +167,18 @@
                             <div class="col-lg-3 col-md-6">
                                 <div class="panel panel-white stats-widget">
                                     <div class="panel-body">
-                                        <div class="pull-left" id="divtotalpost">
-                                            <!-- <script id="load-post" type="text/x-handlebars-template">
+                                        <a href="/table-post">
+                                            <div class="pull-left" id="divtotalpost">
+                                                <!-- <script id="load-post" type="text/x-handlebars-template">
                                                 <span class="stats-number" id="totalpost">{{context}}</span>
                                             </script> -->
-                                            <span class="stats-number" id="totalpost"></span>
-                                            <p class="stats-info">Total Post</p>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="icon-arrow_upward stats-icon"></i>
-                                        </div>
+                                                <span class="stats-number" id="totalpost"></span>
+                                                <p class="stats-info">Total Post</p>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="icon-arrow_upward stats-icon"></i>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -197,42 +199,43 @@
                         <div class="col-lg-3 col-md-6">
                             <div class="panel panel-white stats-widget">
                                 <div class="panel-body">
-                                    <div class="pull-left">
-                                        <span class="stats-number" id="totaluser"></span>
-                                        <p class="stats-info">User</p>
-                                    </div>
-                                    <div class="pull-right">
-                                        <i class="icon-arrow_upward stats-icon"></i>
-                                    </div>
+                                    <a href="/table-user">
+                                        <div class="pull-left">
+                                            <span class="stats-number" id="totaluser"></span>
+                                            <p class="stats-info">User</p>
+                                        </div>
+                                        <div class="pull-right">
+                                            <i class="icon-arrow_upward stats-icon"></i>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6">
                             <div class="panel panel-white stats-widget">
                                 <div class="panel-body">
-                                    <div class="pull-left">
-                                        <span class="stats-number">+534</span>
-                                        <p class="stats-info">New Registrations</p>
-                                    </div>
-                                    <div class="pull-right">
-                                        <i class="icon-arrow_upward stats-icon"></i>
-                                    </div>
+                                    <a href="/table-post">
+                                        <div class="pull-left">
+                                            <span class="stats-number" id="total-view"></span>
+                                            <p class="stats-info">View</p>
+                                        </div>
+                                        <div class="pull-right">
+                                            <i class="icon-arrow_upward stats-icon"></i>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Row -->
+
                     <div class="row">
                         <div class="col-lg-8 col-md-12">
                             <div class="panel panel-white">
                                 <div class="panel-heading clearfix">
-                                    <h4 class="panel-title">Total Revenue</h4>
+                                    <h4 class="panel-title">Total Post of Category</h4>
                                 </div>
-                                <div class="panel-body">
-                                    <div id="chart1">
-                                        <svg></svg>
-                                    </div>
-                                </div>
+                                <canvas id="chart1"></canvas>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-12">
@@ -249,7 +252,7 @@
                                             </div>
                                             <div class="server-stat col-sm-4">
                                                 <p>320GB</p>
-                                                <span>Space</span>
+                                                <span>Cook & Share</span>
                                             </div>
                                             <div class="server-stat col-sm-4">
                                                 <p>57.4%</p>
@@ -347,6 +350,7 @@
     <script src="./plugins/flot/jquery.flot.tooltip.min.js" type="text/javascript"></script>
     <script src="./plugins/flot/jquery.flot.pie.min.js" type="text/javascript"></script>
     <script src="./plugins/chartjs/chart.min.js" type="text/javascript"></script>
+    <script src="./plugins/chartjs/aWapBE.js" type="text/javascript"></script>
     <script src="./js/space.min.js" type="text/javascript"></script>
     <script src="./js/pages/dashboard.js" type="text/javascript"></script>
 </body>

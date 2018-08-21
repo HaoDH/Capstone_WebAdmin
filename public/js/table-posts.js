@@ -10,16 +10,15 @@ db.collection("Post")
             var map = doc.data();
             var date = new Date(map.postTime);
             var n = date.toLocaleString();
-            console.log("postTime: " + n);
-            
             var row = '<tr>' +
                 '<td>' + doc.id + '</td>' +
                 '<td>' + doc.data().postID + '</td>' +
                 '<td>' + doc.data().userID + '</td>' +
                 '<td>' + doc.data().like + '</td>' +
                 '<td>' + doc.data().comment + '</td>' +
+                '<td>' + doc.data().countView + '</td>' +
                 '<td>' + n + '</td>' +
-                '<td>' + doc.data().description + '</td>' +
+                '<td>' + doc.data().title + '</td>' +
                 '</tr>';
             pTable.row.add([
                 docID = doc.id,
@@ -27,13 +26,12 @@ db.collection("Post")
                 userName = doc.data().userID,
                 like = doc.data().like,
                 comment = doc.data().comment,
+                view = doc.data().countView,
                 time = n,
-                description = doc.data().description
+                description = doc.data().title
             ]).draw();
-            console.log(row);
             table.insertAdjacentHTML('beforeend', row);
         });
-        
         // $('#usertable').dataTable();
         $('#posttable').DataTable({
             "destroy": true,

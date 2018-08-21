@@ -39,6 +39,16 @@ postRef.get().then(function (doc) {
             var el_html = template(context);
             $("#post-detail-panel-div").html(el_html);
         })
+        $(document).ready(function () {
+            var source = $("#load-info-post").html();
+            var template = Handlebars.compile(source);
+            var context = {
+                description: doc.data().description,
+                Reported: doc.data().countView,
+            }
+            var el_html = template(context);
+            $("#more-info-post").html(el_html);
+        })
         //get report
         var reportTable = $("#reporttable").DataTable();
         try {
