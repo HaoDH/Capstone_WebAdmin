@@ -258,82 +258,85 @@ function drawUserChart(){
 }
 drawUserChart();
 
+function displayInfoOfDaily(){
 
-var postDB = db.collection("Post");
-postDB.get().then(function (querySnapshot) {
-    var newPostInTheDay = 0;
-    var viewPost = 0;
-    querySnapshot.forEach(function (doc) {
-        var map = doc.data();
-        var dateNow = new Date();
-        var day = new Date(map.postTime);
-        if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
-            console.log(doc.id + doc.data().countView);
-            newPostInTheDay = newPostInTheDay + 1;
-            viewPost = viewPost + doc.data().countView;
-        } else {
-            console.log("something happen");
-        }
-    });
-    var newPost = document.getElementById("new-post-in-the-day");
-    newPost.innerText = newPostInTheDay;
-    var viewDay = document.getElementById("count-view");
-    viewDay.innerText = viewPost;
-})
-    .catch(function (error) {
-        console.log("Error getting documents: ", error);
-    });
-
-var userDB = db.collection("User");
-userDB.get().then(function (querySnapshot) {
-    var newUserInTheDay = 0;
-    querySnapshot.forEach(function (doc) {
-        var map = doc.data();
-        var dateNow = new Date();
-        var day = new Date(map.time);
-        if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
-            console.log("New user: "+doc.id);
-            newUserInTheDay = newUserInTheDay + 1;
-        } else {
-            console.log("something happen");
-        }
-    });
-    var newUser = document.getElementById("new-user-in-the-day");
-    newUser.innerText = newUserInTheDay;
-}).catch(function (error) {
-    console.log("Error getting documents: ", error);
-});
-
-
-function countNumberOfReported() {
-    var reportDB = db.collection("Report");
-
-    reportDB.get().then(function (querySnapshot) {
-        var numberOfReport = 0;
-        var countReport = document.getElementById("count-report");
+    var postDB = db.collection("Post");
+    postDB.get().then(function (querySnapshot) {
+        var newPostInTheDay = 0;
+        var viewPost = 0;
         querySnapshot.forEach(function (doc) {
-            reportDB.doc(doc.id).collection("listreport").get().then(function (_querySnapshot) {
-                _querySnapshot.forEach(function (_doc) {
-                    var map = _doc.data();
-                    var dateNow = new Date();
-                    var day = new Date(map.time);
-                    if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
-                        console.log(_doc.id);
-                        numberOfReport = numberOfReport + 1;
-                    } else {
-                        console.log("something happen");
-                    }
-                })
-                countReport.innerText = numberOfReport;
-            }).catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
-        })
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.postTime);
+            if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                console.log(doc.id + doc.data().countView);
+                newPostInTheDay = newPostInTheDay + 1;
+                viewPost = viewPost + doc.data().countView;
+            } else {
+                console.log("something happen");
+            }
+        });
+        var newPost = document.getElementById("new-post-in-the-day");
+        newPost.innerText = newPostInTheDay;
+        var viewDay = document.getElementById("count-view");
+        viewDay.innerText = viewPost;
+    })
+        .catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
+    
+    var userDB = db.collection("User");
+    userDB.get().then(function (querySnapshot) {
+        var newUserInTheDay = 0;
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.time);
+            if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                console.log("New user: "+doc.id);
+                newUserInTheDay = newUserInTheDay + 1;
+            } else {
+                console.log("something happen");
+            }
+        });
+        var newUser = document.getElementById("new-user-in-the-day");
+        newUser.innerText = newUserInTheDay;
     }).catch(function (error) {
         console.log("Error getting documents: ", error);
     });
+    
+    
+    function countNumberOfReported() {
+        var reportDB = db.collection("Report");
+    
+        reportDB.get().then(function (querySnapshot) {
+            var numberOfReport = 0;
+            var countReport = document.getElementById("count-report");
+            querySnapshot.forEach(function (doc) {
+                reportDB.doc(doc.id).collection("listreport").get().then(function (_querySnapshot) {
+                    _querySnapshot.forEach(function (_doc) {
+                        var map = _doc.data();
+                        var dateNow = new Date();
+                        var day = new Date(map.time);
+                        if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                            console.log(_doc.id);
+                            numberOfReport = numberOfReport + 1;
+                        } else {
+                            console.log("something happen");
+                        }
+                    })
+                    countReport.innerText = numberOfReport;
+                }).catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+            })
+        }).catch(function (error) {
+            console.log("Error getting documents: ", error);
+        });
+    }
+    countNumberOfReported();
 }
-countNumberOfReported();
+displayInfoOfDaily();
 
 function drawChart(){
     $(document).ready(function () {

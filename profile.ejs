@@ -216,28 +216,40 @@
                                         </ul>
                                         <hr>
                                         <button class="btn btn-block" onclick="lockUser()" style="color: #fff; background-color: crimson; border-color: crimson" id="btn-delete">Lock</button>
+                                        <p id="has-locked" style="display: none; color: red">An user has been locked</p>
                                     </script>
 
                                 </div>
                             </div>
                             <div class="panel panel-white">
-                                    <div class="panel-heading clearfix">
-                                        <h4 class="panel-title">Some Info</h4>
-                                    </div>
-                                    <div class="panel-body" id="more-info-user">
-                                        <script id="more-info-profile" type="text/x-handlebars-template">
+                                <div class="panel-heading clearfix">
+                                    <h4 class="panel-title">Some Info</h4>
+                                </div>
+                                <div class="panel-body" id="more-info-user">
+                                    <script id="more-info-profile" type="text/x-handlebars-template">
                                         <p>
                                             Status: {{status}}<hr>
                                             Posts:  {{posts}}
                                         </p>
+                                        Post Removed: {{postRemoved}}
+                                        <p></p>
+                                            <div id="process"></div>
                                         </script>
-                                    </div>
                                 </div>
+                            </div>
                         </div>
                         <div class="col-md-9">
-                            <div class="profile-timeline">
-                                <ul class="list-unstyled">
-                                    <li class="timeline-item">
+                            <div role="tabpanel">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs nav-justified" role="tablist">
+                                    <li role="presentation" class="active"><a href="#tab21" role="tab" data-toggle="tab">All
+                                            Post
+                                        </a></li>
+                                    <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">Black List</a></li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active fade in" id="tab21">
                                         <div class="panel panel-white">
                                             <div class="panel-body">
                                                 <div class="table-responsive">
@@ -245,11 +257,11 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Doc ID</th>
+                                                                <th>Title</th>
+                                                                <th>Time</th>
                                                                 <th>Like</th>
                                                                 <th>Comment</th>
                                                                 <th>View</th>
-                                                                <th>Time</th>
-                                                                <th>Title</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="listpostofuser">
@@ -258,9 +270,33 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="tab22">
+                                        <div class="panel panel-white">
+                                            <div class="panel-body">
+                                                <div class="table-responsive">
+                                                    <table id="blacklist-post-table-of-user" class="table table-bordered" style="width: 100%; cellspacing: 0;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Doc ID</th>
+                                                                <th>Title</th>
+                                                                <th>Time</th>
+                                                                <th>Like</th>
+                                                                <th>Comment</th>
+                                                                <th>View</th>
+                                                                <th>Reported</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="blacklist-post">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <!-- Row -->
@@ -271,47 +307,7 @@
                 </div>
             </div>
             <!-- /Page Inner -->
-            <div class="page-right-sidebar" id="main-right-sidebar">
-                <div class="page-right-sidebar-inner">
-                    <div class="right-sidebar-top">
-                        <div class="right-sidebar-tabs">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active" id="chat-tab">
-                                    <a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">chat</a>
-                                </li>
-                                <li role="presentation" id="settings-tab">
-                                    <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">settings</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="javascript:void(0)" class="right-sidebar-toggle right-sidebar-close" data-sidebar-id="main-right-sidebar">
-                            <i class="icon-close"></i>
-                        </a>
-                    </div>
-                    <div class="right-sidebar-content">
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="page-right-sidebar" id="chat-right-sidebar">
-                <div class="page-right-sidebar-inner">
-                    <div class="right-sidebar-top">
-                        <div class="chat-top-info">
-                            <span class="chat-name">Noah</span>
-                            <span class="chat-state">2h ago</span>
-                        </div>
-                        <a href="javascript:void(0)" class="right-sidebar-toggle chat-sidebar-close pull-right" data-sidebar-id="chat-right-sidebar">
-                            <i class="icon-keyboard_arrow_right"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
+           
         </div>
         <!-- /Page Content -->
     </div>

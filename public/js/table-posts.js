@@ -1,5 +1,7 @@
 var db = firebase.firestore();
 var pTable = $('#posttable').DataTable();
+var blacklistTable = $('#blacklist-post-table').DataTable();
+var deleteTable = $('#delete-post-table').DataTable();
 var postDB = db.collection("Post");
 
 function getUrlParameter(sParam) {
@@ -31,21 +33,26 @@ var time = getUrlParameter('time');
 if (time == "daily") {
     showAllPostTableInDay();
     showBlacklistPostTableInDay();
+    showDeletePostTableInDay();
 }
 if (time == "weekly") {
     showAllPostTableInWeek();
     showBlacklistPostTableInWeek();
+    showDeletePostTableInWeek();
 }
 if (time == "monthly") {
     showAllPostTableInMonth();
     showBlacklistPostTableInMonth();
+    showDeletePostTableInMonth();
 }
 if (time == "annual") {
     showAllPostTableInYear();
     showBlacklistPostTableInYear();
+    showDeletePostTableInYear();
 } else {
     showAllPostTable();
     showBlacklistPostTable();
+    showDeletePostTable();
 }
 
 function showAllPostTable() {
@@ -60,21 +67,23 @@ function showAllPostTable() {
                 '<td>' + doc.id + '</td>' +
                 '<td>' + doc.data().postID + '</td>' +
                 '<td>' + doc.data().userID + '</td>' +
+                '<td>' + doc.data().title + '</td>' +
+                '<td>' + doc.data().userName + '</td>' +
                 '<td>' + doc.data().like + '</td>' +
                 '<td>' + doc.data().comment + '</td>' +
                 '<td>' + doc.data().countView + '</td>' +
                 '<td>' + n + '</td>' +
-                '<td>' + doc.data().title + '</td>' +
                 '</tr>';
             pTable.row.add([
                 docID = doc.id,
                 postID = doc.data().postID,
-                userName = doc.data().userID,
+                userID = doc.data().userID,
+                title = doc.data().title,
+                userName = doc.data().userName,
                 like = doc.data().like,
                 comment = doc.data().comment,
                 view = doc.data().countView,
                 time = n,
-                description = doc.data().title
             ]).draw();
             table.insertAdjacentHTML('beforeend', row);
         });
@@ -102,21 +111,21 @@ function showAllPostTableInDay() {
                     '<td>' + doc.id + '</td>' +
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
                     '<td>' + n + '</td>' +
-                    '<td>' + doc.data().title + '</td>' +
                     '</tr>';
                 pTable.row.add([
                     docID = doc.id,
                     postID = doc.data().postID,
-                    userName = doc.data().userID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
                     time = n,
-                    description = doc.data().title
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', row);
 
@@ -149,21 +158,21 @@ function showAllPostTableInWeek() {
                     '<td>' + doc.id + '</td>' +
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
                     '<td>' + n + '</td>' +
-                    '<td>' + doc.data().title + '</td>' +
                     '</tr>';
                 pTable.row.add([
                     docID = doc.id,
                     postID = doc.data().postID,
-                    userName = doc.data().userID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
                     time = n,
-                    description = doc.data().title
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', row);
 
@@ -196,21 +205,21 @@ function showAllPostTableInMonth() {
                     '<td>' + doc.id + '</td>' +
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
                     '<td>' + n + '</td>' +
-                    '<td>' + doc.data().title + '</td>' +
                     '</tr>';
                 pTable.row.add([
                     docID = doc.id,
                     postID = doc.data().postID,
-                    userName = doc.data().userID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
                     time = n,
-                    description = doc.data().title
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', row);
 
@@ -243,21 +252,21 @@ function showAllPostTableInYear() {
                     '<td>' + doc.id + '</td>' +
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
                     '<td>' + n + '</td>' +
-                    '<td>' + doc.data().title + '</td>' +
                     '</tr>';
                 pTable.row.add([
                     docID = doc.id,
                     postID = doc.data().postID,
-                    userName = doc.data().userID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
                     time = n,
-                    description = doc.data().title
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', row);
 
@@ -278,7 +287,7 @@ function showBlacklistPostTable() {
 
     postDB.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-            if (doc.data().numberOfReported != null || doc.data().numberOfReported > 0) {
+            if (doc.data().numberOfReported > 0) {
                 var table = document.getElementById("blacklist-post");
                 var map = doc.data();
                 var date = new Date(map.postTime);
@@ -287,22 +296,24 @@ function showBlacklistPostTable() {
                     '<td>' + doc.id + '</td>' +
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
                     '<td>' + n + '</td>' +
-                    '<td>' + doc.data().title + '</td>' +
                     '<td>' + doc.data().numberOfReported + '</td>' +
                     '</tr>';
-                pTable.row.add([
+                blacklistTable.row.add([
                     docID = doc.id,
                     postID = doc.data().postID,
-                    userName = doc.data().userID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
+                    userName = userName,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
                     time = n,
-                    title = doc.data().title,
                     numberOfReported = doc.data().numberOfReported
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', row);
@@ -333,22 +344,24 @@ function showBlacklistPostTableInDay() {
                         '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().postID + '</td>' +
                         '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
                         '<td>' + doc.data().countView + '</td>' +
                         '<td>' + n + '</td>' +
-                        '<td>' + doc.data().title + '</td>' +
                         '<td>' + doc.data().numberOfReported + '</td>' +
                         '</tr>';
-                    pTable.row.add([
+                    blacklistTable.row.add([
                         docID = doc.id,
                         postID = doc.data().postID,
-                        userName = doc.data().userID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
                         like = doc.data().like,
                         comment = doc.data().comment,
                         view = doc.data().countView,
                         time = n,
-                        title = doc.data().title,
                         numberOfReported = doc.data().numberOfReported
                     ]).draw();
                     table.insertAdjacentHTML('beforeend', row);
@@ -381,22 +394,24 @@ function showBlacklistPostTableInWeek() {
                         '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().postID + '</td>' +
                         '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
                         '<td>' + doc.data().countView + '</td>' +
                         '<td>' + n + '</td>' +
-                        '<td>' + doc.data().title + '</td>' +
                         '<td>' + doc.data().numberOfReported + '</td>' +
                         '</tr>';
-                    pTable.row.add([
+                    blacklistTable.row.add([
                         docID = doc.id,
                         postID = doc.data().postID,
-                        userName = doc.data().userID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
                         like = doc.data().like,
                         comment = doc.data().comment,
                         view = doc.data().countView,
                         time = n,
-                        title = doc.data().title,
                         numberOfReported = doc.data().numberOfReported
                     ]).draw();
                     table.insertAdjacentHTML('beforeend', row);
@@ -429,22 +444,24 @@ function showBlacklistPostTableInMonth() {
                         '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().postID + '</td>' +
                         '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
                         '<td>' + doc.data().countView + '</td>' +
                         '<td>' + n + '</td>' +
-                        '<td>' + doc.data().title + '</td>' +
                         '<td>' + doc.data().numberOfReported + '</td>' +
                         '</tr>';
-                    pTable.row.add([
+                    blacklistTable.row.add([
                         docID = doc.id,
                         postID = doc.data().postID,
-                        userName = doc.data().userID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
                         like = doc.data().like,
                         comment = doc.data().comment,
                         view = doc.data().countView,
                         time = n,
-                        title = doc.data().title,
                         numberOfReported = doc.data().numberOfReported
                     ]).draw();
                     table.insertAdjacentHTML('beforeend', row);
@@ -477,22 +494,24 @@ function showBlacklistPostTableInYear() {
                         '<td>' + doc.id + '</td>' +
                         '<td>' + doc.data().postID + '</td>' +
                         '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
                         '<td>' + doc.data().like + '</td>' +
                         '<td>' + doc.data().comment + '</td>' +
                         '<td>' + doc.data().countView + '</td>' +
                         '<td>' + n + '</td>' +
-                        '<td>' + doc.data().title + '</td>' +
                         '<td>' + doc.data().numberOfReported + '</td>' +
                         '</tr>';
-                    pTable.row.add([
+                    blacklistTable.row.add([
                         docID = doc.id,
                         postID = doc.data().postID,
-                        userName = doc.data().userID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
                         like = doc.data().like,
                         comment = doc.data().comment,
                         view = doc.data().countView,
                         time = n,
-                        title = doc.data().title,
                         numberOfReported = doc.data().numberOfReported
                     ]).draw();
                     table.insertAdjacentHTML('beforeend', row);
@@ -508,20 +527,289 @@ function showBlacklistPostTableInYear() {
     });
 }
 
+
+function showDeletePostTable() {
+
+    postDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            if (doc.data().status == false) {
+                var table = document.getElementById("delete-post");
+                var map = doc.data();
+                var date = new Date(map.postTime);
+                var n = date.toLocaleString();
+                var row = '<tr>' +
+                    '<td>' + doc.id + '</td>' +
+                    '<td>' + doc.data().postID + '</td>' +
+                    '<td>' + doc.data().userID + '</td>' +
+                    '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
+                    '<td>' + doc.data().like + '</td>' +
+                    '<td>' + doc.data().comment + '</td>' +
+                    '<td>' + doc.data().countView + '</td>' +
+                    '<td>' + n + '</td>' +
+                    '<td>' + doc.data().numberOfReported + '</td>' +
+                    '</tr>';
+                deleteTable.row.add([
+                    docID = doc.id,
+                    postID = doc.data().postID,
+                    userID = doc.data().userID,
+                    title = doc.data().title,
+                    userName = userName,
+                    like = doc.data().like,
+                    comment = doc.data().comment,
+                    view = doc.data().countView,
+                    time = n,
+                    numberOfReported = doc.data().numberOfReported
+                ]).draw();
+                table.insertAdjacentHTML('beforeend', row);
+            }
+
+        });
+        // $('#usertable').dataTable();
+        setToDataTableDelete();
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showDeletePostTableInDay() {
+
+    postDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.postTime);
+            if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    var table = document.getElementById("delete-post");
+                    var map = doc.data();
+                    var date = new Date(map.postTime);
+                    var n = date.toLocaleString();
+                    var row = '<tr>' +
+                        '<td>' + doc.id + '</td>' +
+                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
+                        '<td>' + doc.data().like + '</td>' +
+                        '<td>' + doc.data().comment + '</td>' +
+                        '<td>' + doc.data().countView + '</td>' +
+                        '<td>' + n + '</td>' +
+                        '<td>' + doc.data().numberOfReported + '</td>' +
+                        '</tr>';
+                    deleteTable.row.add([
+                        docID = doc.id,
+                        postID = doc.data().postID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
+                        like = doc.data().like,
+                        comment = doc.data().comment,
+                        view = doc.data().countView,
+                        time = n,
+                        numberOfReported = doc.data().numberOfReported
+                    ]).draw();
+                    table.insertAdjacentHTML('beforeend', row);
+                }
+            }
+
+
+        });
+        // $('#usertable').dataTable();
+        setToDataTableDelete();
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showDeletePostTableInWeek() {
+
+    postDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.postTime);
+            if (weekOfYear(dateNow) == weekOfYear(day) && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    var table = document.getElementById("delete-post");
+                    var map = doc.data();
+                    var date = new Date(map.postTime);
+                    var n = date.toLocaleString();
+                    var row = '<tr>' +
+                        '<td>' + doc.id + '</td>' +
+                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
+                        '<td>' + doc.data().like + '</td>' +
+                        '<td>' + doc.data().comment + '</td>' +
+                        '<td>' + doc.data().countView + '</td>' +
+                        '<td>' + n + '</td>' +
+                        '<td>' + doc.data().numberOfReported + '</td>' +
+                        '</tr>';
+                    deleteTable.row.add([
+                        docID = doc.id,
+                        postID = doc.data().postID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
+                        like = doc.data().like,
+                        comment = doc.data().comment,
+                        view = doc.data().countView,
+                        time = n,
+                        numberOfReported = doc.data().numberOfReported
+                    ]).draw();
+                    table.insertAdjacentHTML('beforeend', row);
+                }
+            }
+
+
+        });
+        // $('#usertable').dataTable();
+        setToDataTableDelete();
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showDeletePostTableInMonth() {
+
+    postDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.postTime);
+            if (day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    var table = document.getElementById("delete-post");
+                    var map = doc.data();
+                    var date = new Date(map.postTime);
+                    var n = date.toLocaleString();
+                    var row = '<tr>' +
+                        '<td>' + doc.id + '</td>' +
+                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
+                        '<td>' + doc.data().like + '</td>' +
+                        '<td>' + doc.data().comment + '</td>' +
+                        '<td>' + doc.data().countView + '</td>' +
+                        '<td>' + n + '</td>' +
+                        '<td>' + doc.data().numberOfReported + '</td>' +
+                        '</tr>';
+                    deleteTable.row.add([
+                        docID = doc.id,
+                        postID = doc.data().postID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
+                        like = doc.data().like,
+                        comment = doc.data().comment,
+                        view = doc.data().countView,
+                        time = n,
+                        numberOfReported = doc.data().numberOfReported
+                    ]).draw();
+                    table.insertAdjacentHTML('beforeend', row);
+                }
+            }
+
+
+        });
+        // $('#usertable').dataTable();
+        setToDataTableDelete();
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showDeletePostTableInYear() {
+
+    postDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var day = new Date(map.postTime);
+            if (day.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    var table = document.getElementById("delete-post");
+                    var map = doc.data();
+                    var date = new Date(map.postTime);
+                    var n = date.toLocaleString();
+                    var row = '<tr>' +
+                        '<td>' + doc.id + '</td>' +
+                        '<td>' + doc.data().postID + '</td>' +
+                        '<td>' + doc.data().userID + '</td>' +
+                        '<td>' + doc.data().title + '</td>' +
+                        '<td>' + doc.data().userName + '</td>' +
+                        '<td>' + doc.data().like + '</td>' +
+                        '<td>' + doc.data().comment + '</td>' +
+                        '<td>' + doc.data().countView + '</td>' +
+                        '<td>' + n + '</td>' +
+                        '<td>' + doc.data().numberOfReported + '</td>' +
+                        '</tr>';
+                    deleteTable.row.add([
+                        docID = doc.id,
+                        postID = doc.data().postID,
+                        userID = doc.data().userID,
+                        title = doc.data().title,
+                        userName = userName,
+                        like = doc.data().like,
+                        comment = doc.data().comment,
+                        view = doc.data().countView,
+                        time = n,
+                        numberOfReported = doc.data().numberOfReported
+                    ]).draw();
+                    table.insertAdjacentHTML('beforeend', row);
+                }
+            }
+
+
+        });
+        // $('#usertable').dataTable();
+        setToDataTableDelete();
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
 function setToDataTableAllPost() {
     $('#posttable').DataTable({
         "destroy": true,
         "jQueryUI": true,
         "pagingType": "full_numbers",
-        "columnDefs": [{
-            "targets": 0,
-            "render": function (data, type, row) {
-                if (type === "display") {
-                    return "<a href=\"post-detail?docID=" + encodeURIComponent(data) + "\">" + data + "</a>";
+        "columnDefs": [
+
+            {
+                "targets": 3,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"post-detail?docID=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                    }
+                    return data;
                 }
-                return data;
-            }
-        }]
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"profile?userID=" + encodeURIComponent(row[2]) + "\">" + data + "</a>";
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": [0],
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "visible": false
+            },
+            {
+                "targets": [2],
+                "visible": false
+            },
+        ]
     });
 }
 
@@ -531,14 +819,78 @@ function setToDataTableBlackList() {
         "destroy": true,
         "jQueryUI": true,
         "pagingType": "full_numbers",
-        "columnDefs": [{
-            "targets": 0,
-            "render": function (data, type, row) {
-                if (type === "display") {
-                    return "<a href=\"post-detail?docID=" + encodeURIComponent(data) + "\">" + data + "</a>";
+        "columnDefs": [
+            {
+                "targets": 3,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"post-detail?docID=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                    }
+                    return data;
                 }
-                return data;
-            }
-        }]
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"profile?userID=" + encodeURIComponent(row[2]) + "\">" + data + "</a>";
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": [0],
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "visible": false
+            },
+            {
+                "targets": [2],
+                "visible": false
+            },
+        ]
+    });
+}
+
+function setToDataTableDelete() {
+    $('#delete-post-table').DataTable({
+        "destroy": true,
+        "jQueryUI": true,
+        "pagingType": "full_numbers",
+        "columnDefs": [
+
+            {
+                "targets": 3,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"post-detail?docID=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": 4,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a href=\"profile?userID=" + encodeURIComponent(row[2]) + "\">" + data + "</a>";
+                    }
+                    return data;
+                }
+            },
+            {
+                "targets": [0],
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "visible": false
+            },
+            {
+                "targets": [2],
+                "visible": false
+            },
+        ]
     });
 }

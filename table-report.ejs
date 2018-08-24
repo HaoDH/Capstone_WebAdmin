@@ -94,8 +94,8 @@
                             </a>
                             <ul class="sub-menu">
                                 <li><a href="table-user">Users</a></li>
-                                <li><a href="table-post" class="active">Posts</a></li>
-                                <li><a href="table-report">Reports</a></li>
+                                <li><a href="table-post">Posts</a></li>
+                                <li><a href="table-report" class="active">Reports</a></li>
                             </ul>
                         </li>
                         <li class="menu-divider"></li>
@@ -209,7 +209,7 @@
                                                     Report
                                                 </a></li>
                                             <li role="presentation"><a href="#tab22" role="tab" data-toggle="tab">Approval</a></li>
-                                            <li role="presentation"><a href="#tab23" role="tab" data-toggle="tab">Deleted</a></li>
+                                            <li role="presentation"><a href="#tab23" role="tab" data-toggle="tab">Rejected</a></li>
                                         </ul>
                                         <!-- Tab panes -->
                                         <div class="tab-content">
@@ -220,10 +220,11 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Doc ID</th>
-                                                                    <th>Post ID</th>
+                                                                    <th>Title</th>
                                                                     <th>User ID</th>
-                                                                    <th>Status</th>
+                                                                    <th>User Name</th>
                                                                     <th>Content</th>
+                                                                    <th>Status</th>
                                                                     <th>Time</th>
                                                                 </tr>
                                                             </thead>
@@ -239,12 +240,13 @@
                                                         <table id="approval-report-table" class="display table" style="width: 100%; cellspacing: 0;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Doc ID</th>
-                                                                    <th>Post ID</th>
-                                                                    <th>User ID</th>
-                                                                    <th>Status</th>
-                                                                    <th>Content</th>
-                                                                    <th>Time</th>
+                                                                        <th>Doc ID</th>
+                                                                        <th>Title</th>
+                                                                        <th>User ID</th>
+                                                                        <th>User Name</th>
+                                                                        <th>Content</th>
+                                                                        <th>Status</th>
+                                                                        <th>Time</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody id="approval-report">
@@ -254,20 +256,21 @@
                                                 </div>
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="tab23">
-                                                    <div class="panel-body">
+                                                <div class="panel-body">
                                                     <div class="table-responsive">
-                                                        <table id="delete-report-table" class="display table" style="width: 100%; cellspacing: 0;">
+                                                        <table id="rejected-report-table" class="display table" style="width: 100%; cellspacing: 0;">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Doc ID</th>
-                                                                    <th>Post ID</th>
-                                                                    <th>User ID</th>
-                                                                    <th>Status</th>
-                                                                    <th>Content</th>
-                                                                    <th>Time</th>
+                                                                        <th>Doc ID</th>
+                                                                        <th>Title</th>
+                                                                        <th>User ID</th>
+                                                                        <th>User Name</th>
+                                                                        <th>Content</th>
+                                                                        <th>Status</th>
+                                                                        <th>Time</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody id="delete-report">
+                                                            <tbody id="rejected-report">
                                                             </tbody>
                                                         </table>
                                                     </div>

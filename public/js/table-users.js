@@ -41,7 +41,7 @@ if (time == "daily") {
 if (time == "weekly") {
     showAllUserTableInWeek();
     showBlacklistUserTableInWeek();
-} 
+}
 if (time == "monthly") {
     showAllUserTableInMonth();
     showBlacklistUserTableInMonth();
@@ -49,7 +49,7 @@ if (time == "monthly") {
 if (time == "annual") {
     showAllUserTableInYear();
     showBlacklistUserTableInYear();
-}else {
+} else {
     showAllUserTable();
     showBlacklistUserTable();
 }
@@ -57,29 +57,34 @@ if (time == "annual") {
 function showAllUserTable() {
     userDB.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-            console.log(doc.id, " => ", doc.data());
-            $('#exampless').dataTable();
-            var table = document.getElementById("listusers");
-            var col = '<tr>' +
-                '<td>' + doc.id + '</td> ' +
-                '<td>' + doc.data().userID + '</td> ' +
-                '<td>' + doc.data().firstName + '</td> ' +
-                '<td>' + doc.data().sex + '</td> ' +
-                '<td>' + doc.data().dateOfBirth + '</td>' +
-                '<td>' + doc.data().phone + '</td>' +
-                '<td>' + doc.data().secondName + '</td>' +
-                '</tr>';
-            t.row.add([
-                docID = doc.id,
-                userID = doc.data().userID,
-                fistName = doc.data().firstName,
-                sex = doc.data().sex,
-                dateOfBirth = doc.data().dateOfBirth,
-                phone = doc.data().phone,
-                secondName = doc.data().secondName
-            ]).draw();
-            console.log(col);
-            table.insertAdjacentHTML('beforeend', col);
+            if (doc.data().status == true){
+                var map = doc.data();
+                var date = new Date(map.time);
+                var time = date.toLocaleString();
+                $('#exampless').dataTable();
+                var table = document.getElementById("listusers");
+                var col = '<tr>' +
+                    '<td>' + doc.id + '</td> ' +
+                    '<td>' + doc.data().userID + '</td> ' +
+                    '<td>' + doc.data().firstName + '</td> ' +
+                    '<td>' + doc.data().sex + '</td> ' +
+                    '<td>' + doc.data().dateOfBirth + '</td>' +
+                    '<td>' + doc.data().phone + '</td>' +
+                    '<td>' + time + '</td>' +
+                    '</tr>';
+                t.row.add([
+                    docID = doc.id,
+                    userID = doc.data().userID,
+                    fistName = doc.data().firstName,
+                    sex = doc.data().sex,
+                    dateOfBirth = doc.data().dateOfBirth,
+                    phone = doc.data().phone,
+                    time = time
+                ]).draw();
+                console.log(col);
+                table.insertAdjacentHTML('beforeend', col);
+            }
+            
             //table.innerHTML(col);
         });
         // $('#usertable').dataTable();
@@ -89,13 +94,21 @@ function showAllUserTable() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
-                    }
+                    },
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -110,8 +123,9 @@ function showAllUserTableInDay() {
             console.log(doc.id, " => ", doc.data());
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getDate() == dateNow.getDate() && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 $('#exampless').dataTable();
                 var table = document.getElementById("listusers");
                 var col = '<tr>' +
@@ -121,7 +135,7 @@ function showAllUserTableInDay() {
                     '<td>' + doc.data().sex + '</td> ' +
                     '<td>' + doc.data().dateOfBirth + '</td>' +
                     '<td>' + doc.data().phone + '</td>' +
-                    '<td>' + doc.data().secondName + '</td>' +
+                    '<td>' + time + '</td>' +
                     '</tr>';
                 t.row.add([
                     docID = doc.id,
@@ -130,12 +144,12 @@ function showAllUserTableInDay() {
                     sex = doc.data().sex,
                     dateOfBirth = doc.data().dateOfBirth,
                     phone = doc.data().phone,
-                    secondName = doc.data().secondName
+                    time = time
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', col);
                 //table.innerHTML(col);
             }
-           
+
         });
         // $('#usertable').dataTable();
         $('#usertable').DataTable({
@@ -144,13 +158,21 @@ function showAllUserTableInDay() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
-                    }
+                    },
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -165,8 +187,9 @@ function showAllUserTableInWeek() {
             console.log(doc.id, " => ", doc.data());
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (weekOfYear(dateNow) == weekOfYear(day) && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (weekOfYear(dateNow) == weekOfYear(date) && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 $('#exampless').dataTable();
                 var table = document.getElementById("listusers");
                 var col = '<tr>' +
@@ -176,7 +199,7 @@ function showAllUserTableInWeek() {
                     '<td>' + doc.data().sex + '</td> ' +
                     '<td>' + doc.data().dateOfBirth + '</td>' +
                     '<td>' + doc.data().phone + '</td>' +
-                    '<td>' + doc.data().secondName + '</td>' +
+                    '<td>' + time + '</td>' +
                     '</tr>';
                 t.row.add([
                     docID = doc.id,
@@ -185,12 +208,12 @@ function showAllUserTableInWeek() {
                     sex = doc.data().sex,
                     dateOfBirth = doc.data().dateOfBirth,
                     phone = doc.data().phone,
-                    secondName = doc.data().secondName
+                    time = time,
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', col);
                 //table.innerHTML(col);
             }
-           
+
         });
         // $('#usertable').dataTable();
         $('#usertable').DataTable({
@@ -199,13 +222,21 @@ function showAllUserTableInWeek() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
-                    }
+                    },
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -220,8 +251,9 @@ function showAllUserTableInMonth() {
             console.log(doc.id, " => ", doc.data());
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 $('#exampless').dataTable();
                 var table = document.getElementById("listusers");
                 var col = '<tr>' +
@@ -231,7 +263,7 @@ function showAllUserTableInMonth() {
                     '<td>' + doc.data().sex + '</td> ' +
                     '<td>' + doc.data().dateOfBirth + '</td>' +
                     '<td>' + doc.data().phone + '</td>' +
-                    '<td>' + doc.data().secondName + '</td>' +
+                    '<td>' + time + '</td>' +
                     '</tr>';
                 t.row.add([
                     docID = doc.id,
@@ -240,12 +272,12 @@ function showAllUserTableInMonth() {
                     sex = doc.data().sex,
                     dateOfBirth = doc.data().dateOfBirth,
                     phone = doc.data().phone,
-                    secondName = doc.data().secondName
+                    time = time,
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', col);
                 //table.innerHTML(col);
             }
-           
+
         });
         // $('#usertable').dataTable();
         $('#usertable').DataTable({
@@ -254,13 +286,21 @@ function showAllUserTableInMonth() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
-                    }
+                    },
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -275,8 +315,9 @@ function showAllUserTableInYear() {
             console.log(doc.id, " => ", doc.data());
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getFullYear() == dateNow.getFullYear()) {
                 $('#exampless').dataTable();
                 var table = document.getElementById("listusers");
                 var col = '<tr>' +
@@ -286,7 +327,7 @@ function showAllUserTableInYear() {
                     '<td>' + doc.data().sex + '</td> ' +
                     '<td>' + doc.data().dateOfBirth + '</td>' +
                     '<td>' + doc.data().phone + '</td>' +
-                    '<td>' + doc.data().secondName + '</td>' +
+                    '<td>' + time + '</td>' +
                     '</tr>';
                 t.row.add([
                     docID = doc.id,
@@ -295,12 +336,12 @@ function showAllUserTableInYear() {
                     sex = doc.data().sex,
                     dateOfBirth = doc.data().dateOfBirth,
                     phone = doc.data().phone,
-                    secondName = doc.data().secondName
+                    time = time,
                 ]).draw();
                 table.insertAdjacentHTML('beforeend', col);
                 //table.innerHTML(col);
             }
-           
+
         });
         // $('#usertable').dataTable();
         $('#usertable').DataTable({
@@ -309,13 +350,21 @@ function showAllUserTableInYear() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
-                    }
+                    },
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -326,8 +375,11 @@ function showAllUserTableInYear() {
 function showBlacklistUserTable() {
     userDB.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
             if (doc.data().postRemoved != null || doc.data().postRemoved > 0) {
-                $('#exampless').dataTable();
+
                 var table = document.getElementById("blacklist-user");
                 var col = '<tr>' +
                     '<td>' + doc.id + '</td> ' +
@@ -336,7 +388,7 @@ function showBlacklistUserTable() {
                     '<td>' + doc.data().sex + '</td> ' +
                     '<td>' + doc.data().dateOfBirth + '</td>' +
                     '<td>' + doc.data().phone + '</td>' +
-                    '<td>' + doc.data().secondName + '</td>' +
+                    '<td>' + time + '</td>' +
                     '<td>' + doc.data().postRemoved + '</td>' +
                     '</tr>';
                 t.row.add([
@@ -346,7 +398,7 @@ function showBlacklistUserTable() {
                     sex = doc.data().sex,
                     dateOfBirth = doc.data().dateOfBirth,
                     phone = doc.data().phone,
-                    secondName = doc.data().secondName,
+                    time = time,
                     postRemoved = doc.data().postRemoved
                 ]).draw();
                 console.log(col);
@@ -362,13 +414,21 @@ function showBlacklistUserTable() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
                     }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -382,8 +442,9 @@ function showBlacklistUserTableInDay() {
         querySnapshot.forEach(function (doc) {
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getDate() == dateNow.getDate() && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getDate() == dateNow.getDate() && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 if (doc.data().postRemoved != null || doc.data().postRemoved > 0) {
                     $('#exampless').dataTable();
                     var table = document.getElementById("blacklist-user");
@@ -394,7 +455,7 @@ function showBlacklistUserTableInDay() {
                         '<td>' + doc.data().sex + '</td> ' +
                         '<td>' + doc.data().dateOfBirth + '</td>' +
                         '<td>' + doc.data().phone + '</td>' +
-                        '<td>' + doc.data().secondName + '</td>' +
+                        '<td>' + time + '</td>' +
                         '<td>' + doc.data().postRemoved + '</td>' +
                         '</tr>';
                     t.row.add([
@@ -404,15 +465,15 @@ function showBlacklistUserTableInDay() {
                         sex = doc.data().sex,
                         dateOfBirth = doc.data().dateOfBirth,
                         phone = doc.data().phone,
-                        secondName = doc.data().secondName,
+                        time = time,
                         postRemoved = doc.data().postRemoved
                     ]).draw();
                     console.log(col);
                     table.insertAdjacentHTML('beforeend', col);
                 }
-    
+
             }
-            
+
             //table.innerHTML(col);
         });
         // $('#usertable').dataTable();
@@ -422,13 +483,21 @@ function showBlacklistUserTableInDay() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
                     }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -442,8 +511,9 @@ function showBlacklistUserTableInWeek() {
         querySnapshot.forEach(function (doc) {
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (weekOfYear(dateNow) == weekOfYear(day) && day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (weekOfYear(dateNow) == weekOfYear(date) && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 if (doc.data().postRemoved != null || doc.data().postRemoved > 0) {
                     $('#exampless').dataTable();
                     var table = document.getElementById("blacklist-user");
@@ -454,7 +524,7 @@ function showBlacklistUserTableInWeek() {
                         '<td>' + doc.data().sex + '</td> ' +
                         '<td>' + doc.data().dateOfBirth + '</td>' +
                         '<td>' + doc.data().phone + '</td>' +
-                        '<td>' + doc.data().secondName + '</td>' +
+                        '<td>' + time + '</td>' +
                         '<td>' + doc.data().postRemoved + '</td>' +
                         '</tr>';
                     t.row.add([
@@ -464,15 +534,15 @@ function showBlacklistUserTableInWeek() {
                         sex = doc.data().sex,
                         dateOfBirth = doc.data().dateOfBirth,
                         phone = doc.data().phone,
-                        secondName = doc.data().secondName,
+                        time = time,
                         postRemoved = doc.data().postRemoved
                     ]).draw();
                     console.log(col);
                     table.insertAdjacentHTML('beforeend', col);
                 }
-    
+
             }
-            
+
             //table.innerHTML(col);
         });
         // $('#usertable').dataTable();
@@ -482,13 +552,21 @@ function showBlacklistUserTableInWeek() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
                     }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -502,8 +580,9 @@ function showBlacklistUserTableInMonth() {
         querySnapshot.forEach(function (doc) {
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getMonth() == dateNow.getMonth() && day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
                 if (doc.data().postRemoved != null || doc.data().postRemoved > 0) {
                     $('#exampless').dataTable();
                     var table = document.getElementById("blacklist-user");
@@ -514,7 +593,7 @@ function showBlacklistUserTableInMonth() {
                         '<td>' + doc.data().sex + '</td> ' +
                         '<td>' + doc.data().dateOfBirth + '</td>' +
                         '<td>' + doc.data().phone + '</td>' +
-                        '<td>' + doc.data().secondName + '</td>' +
+                        '<td>' + time + '</td>' +
                         '<td>' + doc.data().postRemoved + '</td>' +
                         '</tr>';
                     t.row.add([
@@ -524,15 +603,15 @@ function showBlacklistUserTableInMonth() {
                         sex = doc.data().sex,
                         dateOfBirth = doc.data().dateOfBirth,
                         phone = doc.data().phone,
-                        secondName = doc.data().secondName,
+                        time = time,
                         postRemoved = doc.data().postRemoved
                     ]).draw();
                     console.log(col);
                     table.insertAdjacentHTML('beforeend', col);
                 }
-    
+
             }
-            
+
             //table.innerHTML(col);
         });
         // $('#usertable').dataTable();
@@ -542,13 +621,21 @@ function showBlacklistUserTableInMonth() {
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
                     }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
@@ -562,8 +649,9 @@ function showBlacklistUserTableInYear() {
         querySnapshot.forEach(function (doc) {
             var map = doc.data();
             var dateNow = new Date();
-            var day = new Date(map.time);
-            if (day.getFullYear() == dateNow.getFullYear()) {
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getFullYear() == dateNow.getFullYear()) {
                 if (doc.data().postRemoved != null || doc.data().postRemoved > 0) {
                     $('#exampless').dataTable();
                     var table = document.getElementById("blacklist-user");
@@ -574,7 +662,7 @@ function showBlacklistUserTableInYear() {
                         '<td>' + doc.data().sex + '</td> ' +
                         '<td>' + doc.data().dateOfBirth + '</td>' +
                         '<td>' + doc.data().phone + '</td>' +
-                        '<td>' + doc.data().secondName + '</td>' +
+                        '<td>' + time + '</td>' +
                         '<td>' + doc.data().postRemoved + '</td>' +
                         '</tr>';
                     t.row.add([
@@ -584,31 +672,36 @@ function showBlacklistUserTableInYear() {
                         sex = doc.data().sex,
                         dateOfBirth = doc.data().dateOfBirth,
                         phone = doc.data().phone,
-                        secondName = doc.data().secondName,
+                        time = time,
                         postRemoved = doc.data().postRemoved
                     ]).draw();
                     console.log(col);
                     table.insertAdjacentHTML('beforeend', col);
                 }
-    
+
             }
-            
-            //table.innerHTML(col);
         });
-        // $('#usertable').dataTable();
         $('#blacklist-user-table').DataTable({
             "destroy": true,
             "jQueryUI": true,
             "pagingType": "full_numbers",
             "columnDefs": [
                 {
-                    "targets": 0,
+                    "targets": 2,
                     "render": function (data, type, row) {
                         if (type === "display") {
-                            return "<a href=\"profile?account=" + encodeURIComponent(data) + "\">" + data + "</a>";
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
                         }
                         return data;
                     }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
                 }
             ]
         });
