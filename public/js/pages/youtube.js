@@ -23,7 +23,7 @@ function uploadYoutube() {
             })
             window.alert("Video uploaded!!!");
         } else {
-            window.alert("Nullll")
+            window.alert("Please enter value in the title and youtube code")
         }
     } else {
         return false;
@@ -37,7 +37,7 @@ youtubeDB.get().then(function (querySnapshot) {
         var i = 0;
         var table = document.getElementById("list-youtube");
         var rows = '<tr>' +
-            '<td>' + doc.id + '</td>' +
+            // '<td>' + doc.id + '</td>' +
             '<td>' + doc.data().tipID + '</td>' +
             '<td>' + doc.data().title + '</td>' +
             '<td>' + doc.data().youtubeUrl + '</td>' +
@@ -45,7 +45,7 @@ youtubeDB.get().then(function (querySnapshot) {
             '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red" onclick="deleteVideo(' + "'" + doc.id + "'" + ')" class="btn btn-default">Delete</button>' + '</td>' +
             '</tr>';
         reportTable.row.add([
-            docID = doc.id,
+            // docID = doc.id,
             tipID = doc.data().tipID,
             title = doc.data().title,
             youtubeCode = doc.data().youtubeUrl,

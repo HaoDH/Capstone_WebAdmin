@@ -112,6 +112,7 @@ function showAllPostTableInDay() {
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
                     '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
@@ -122,6 +123,7 @@ function showAllPostTableInDay() {
                     postID = doc.data().postID,
                     userID = doc.data().userID,
                     title = doc.data().title,
+                    userName = doc.data().userName,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
@@ -159,6 +161,7 @@ function showAllPostTableInWeek() {
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
                     '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
@@ -169,6 +172,7 @@ function showAllPostTableInWeek() {
                     postID = doc.data().postID,
                     userID = doc.data().userID,
                     title = doc.data().title,
+                    userName = doc.data().userName,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
@@ -206,6 +210,7 @@ function showAllPostTableInMonth() {
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
                     '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
@@ -216,6 +221,7 @@ function showAllPostTableInMonth() {
                     postID = doc.data().postID,
                     userID = doc.data().userID,
                     title = doc.data().title,
+                    userName = doc.data().userName,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
@@ -253,6 +259,7 @@ function showAllPostTableInYear() {
                     '<td>' + doc.data().postID + '</td>' +
                     '<td>' + doc.data().userID + '</td>' +
                     '<td>' + doc.data().title + '</td>' +
+                    '<td>' + doc.data().userName + '</td>' +
                     '<td>' + doc.data().like + '</td>' +
                     '<td>' + doc.data().comment + '</td>' +
                     '<td>' + doc.data().countView + '</td>' +
@@ -263,6 +270,7 @@ function showAllPostTableInYear() {
                     postID = doc.data().postID,
                     userID = doc.data().userID,
                     title = doc.data().title,
+                    userName = doc.data().userName,
                     like = doc.data().like,
                     comment = doc.data().comment,
                     view = doc.data().countView,
@@ -517,8 +525,6 @@ function showBlacklistPostTableInYear() {
                     table.insertAdjacentHTML('beforeend', row);
                 }
             }
-
-
         });
         // $('#usertable').dataTable();
         setToDataTableBlackList();

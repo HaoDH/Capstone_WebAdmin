@@ -52,6 +52,7 @@ if (time == "annual") {
 } else {
     showAllUserTable();
     showBlacklistUserTable();
+    showLockedUserTable();
 }
 
 function showAllUserTable() {
@@ -372,6 +373,7 @@ function showAllUserTableInYear() {
         console.log("Error getting documents: ", error);
     });
 }
+
 function showBlacklistUserTable() {
     userDB.get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -709,3 +711,345 @@ function showBlacklistUserTableInYear() {
         console.log("Error getting documents: ", error);
     });
 }
+
+
+
+function showLockedUserTable() {
+    userDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (doc.data().status == false) {
+
+                var table = document.getElementById("locked-user");
+                var col = '<tr>' +
+                    '<td>' + doc.id + '</td> ' +
+                    '<td>' + doc.data().userID + '</td> ' +
+                    '<td>' + doc.data().firstName + '</td> ' +
+                    '<td>' + doc.data().sex + '</td> ' +
+                    '<td>' + doc.data().dateOfBirth + '</td>' +
+                    '<td>' + doc.data().phone + '</td>' +
+                    '<td>' + time + '</td>' +
+                    '<td>' + doc.data().postRemoved + '</td>' +
+                    '</tr>';
+                t.row.add([
+                    docID = doc.id,
+                    userID = doc.data().userID,
+                    fistName = doc.data().firstName,
+                    sex = doc.data().sex,
+                    dateOfBirth = doc.data().dateOfBirth,
+                    phone = doc.data().phone,
+                    time = time,
+                    postRemoved = doc.data().postRemoved
+                ]).draw();
+                console.log(col);
+                table.insertAdjacentHTML('beforeend', col);
+            }
+
+            //table.innerHTML(col);
+        });
+        // $('#usertable').dataTable();
+        $('#locked-user-table').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 2,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
+                }
+            ]
+        });
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+
+function showLockedUserTableInDay() {
+    userDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getDate() == dateNow.getDate() && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    $('#exampless').dataTable();
+                    var table = document.getElementById("locked-user");
+                    var col = '<tr>' +
+                        '<td>' + doc.id + '</td> ' +
+                        '<td>' + doc.data().userID + '</td> ' +
+                        '<td>' + doc.data().firstName + '</td> ' +
+                        '<td>' + doc.data().sex + '</td> ' +
+                        '<td>' + doc.data().dateOfBirth + '</td>' +
+                        '<td>' + doc.data().phone + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td>' + doc.data().postRemoved + '</td>' +
+                        '</tr>';
+                    t.row.add([
+                        docID = doc.id,
+                        userID = doc.data().userID,
+                        fistName = doc.data().firstName,
+                        sex = doc.data().sex,
+                        dateOfBirth = doc.data().dateOfBirth,
+                        phone = doc.data().phone,
+                        time = time,
+                        postRemoved = doc.data().postRemoved
+                    ]).draw();
+                    console.log(col);
+                    table.insertAdjacentHTML('beforeend', col);
+                }
+
+            }
+
+            //table.innerHTML(col);
+        });
+        // $('#usertable').dataTable();
+        $('#locked-user-table').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 2,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
+                }
+            ]
+        });
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showLockedUserTableInWeek() {
+    userDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (weekOfYear(dateNow) == weekOfYear(date) && date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    $('#exampless').dataTable();
+                    var table = document.getElementById("locked-user");
+                    var col = '<tr>' +
+                        '<td>' + doc.id + '</td> ' +
+                        '<td>' + doc.data().userID + '</td> ' +
+                        '<td>' + doc.data().firstName + '</td> ' +
+                        '<td>' + doc.data().sex + '</td> ' +
+                        '<td>' + doc.data().dateOfBirth + '</td>' +
+                        '<td>' + doc.data().phone + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td>' + doc.data().postRemoved + '</td>' +
+                        '</tr>';
+                    t.row.add([
+                        docID = doc.id,
+                        userID = doc.data().userID,
+                        fistName = doc.data().firstName,
+                        sex = doc.data().sex,
+                        dateOfBirth = doc.data().dateOfBirth,
+                        phone = doc.data().phone,
+                        time = time,
+                        postRemoved = doc.data().postRemoved
+                    ]).draw();
+                    console.log(col);
+                    table.insertAdjacentHTML('beforeend', col);
+                }
+
+            }
+
+            //table.innerHTML(col);
+        });
+        // $('#usertable').dataTable();
+        $('#locked-user-table').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 2,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
+                }
+            ]
+        });
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showLockedUserTableInMonth() {
+    userDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getMonth() == dateNow.getMonth() && date.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    $('#exampless').dataTable();
+                    var table = document.getElementById("locked-user");
+                    var col = '<tr>' +
+                        '<td>' + doc.id + '</td> ' +
+                        '<td>' + doc.data().userID + '</td> ' +
+                        '<td>' + doc.data().firstName + '</td> ' +
+                        '<td>' + doc.data().sex + '</td> ' +
+                        '<td>' + doc.data().dateOfBirth + '</td>' +
+                        '<td>' + doc.data().phone + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td>' + doc.data().postRemoved + '</td>' +
+                        '</tr>';
+                    t.row.add([
+                        docID = doc.id,
+                        userID = doc.data().userID,
+                        fistName = doc.data().firstName,
+                        sex = doc.data().sex,
+                        dateOfBirth = doc.data().dateOfBirth,
+                        phone = doc.data().phone,
+                        time = time,
+                        postRemoved = doc.data().postRemoved
+                    ]).draw();
+                    console.log(col);
+                    table.insertAdjacentHTML('beforeend', col);
+                }
+
+            }
+
+            //table.innerHTML(col);
+        });
+        // $('#usertable').dataTable();
+        $('#locked-user-table').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 2,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
+                }
+            ]
+        });
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+
+function showLockedUserTableInYear() {
+    userDB.get().then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+            var map = doc.data();
+            var dateNow = new Date();
+            var date = new Date(map.time);
+            var time = date.toLocaleString();
+            if (date.getFullYear() == dateNow.getFullYear()) {
+                if (doc.data().status == false) {
+                    $('#exampless').dataTable();
+                    var table = document.getElementById("locked-user");
+                    var col = '<tr>' +
+                        '<td>' + doc.id + '</td> ' +
+                        '<td>' + doc.data().userID + '</td> ' +
+                        '<td>' + doc.data().firstName + '</td> ' +
+                        '<td>' + doc.data().sex + '</td> ' +
+                        '<td>' + doc.data().dateOfBirth + '</td>' +
+                        '<td>' + doc.data().phone + '</td>' +
+                        '<td>' + time + '</td>' +
+                        '<td>' + doc.data().postRemoved + '</td>' +
+                        '</tr>';
+                    t.row.add([
+                        docID = doc.id,
+                        userID = doc.data().userID,
+                        fistName = doc.data().firstName,
+                        sex = doc.data().sex,
+                        dateOfBirth = doc.data().dateOfBirth,
+                        phone = doc.data().phone,
+                        time = time,
+                        postRemoved = doc.data().postRemoved
+                    ]).draw();
+                    console.log(col);
+                    table.insertAdjacentHTML('beforeend', col);
+                }
+
+            }
+        });
+        $('#locked-user-table').DataTable({
+            "destroy": true,
+            "jQueryUI": true,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+                {
+                    "targets": 2,
+                    "render": function (data, type, row) {
+                        if (type === "display") {
+                            return "<a href=\"profile?account=" + encodeURIComponent(row[0]) + "\">" + data + "</a>";
+                        }
+                        return data;
+                    }
+                },
+                {
+                    "targets": [0],
+                    "visible": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false
+                }
+            ]
+        });
+    }).catch(function (error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+

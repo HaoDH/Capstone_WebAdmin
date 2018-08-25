@@ -61,14 +61,16 @@ postRef.get().then(function (doc) {
         $(document).ready(function () {
             var source = $("#load-post-detail").html();
             var template = Handlebars.compile(source);
-
+            var map = doc.data();
+            var date = new Date(map.postTime);
+            var postTime = date.toLocaleString();
             var context = {
                 urlImage: doc.data().urlImage,
                 title: doc.data().title,
                 userID: doc.data().userID,
                 userName: doc.data().userName,
                 postID: doc.data().postID,
-                dateCreate: doc.data().dateCreate
+                dateCreate: postTime
             }
             var el_html = template(context);
             $("#post-detail-panel-div").html(el_html);
@@ -187,28 +189,29 @@ postRef.get().then(function (doc) {
                                     status = "deleted";
                                 }
                                 var rows = '<tr>' +
-                                    '<td>' + doc.data().userID + '</td>' +
+                                    // '<td>' + doc.data().userID + '</td>' +
                                     '<td>' + doc.data().userName + '</td>' +
                                     '<td>' + status + '</td>' +
                                     '<td>' + doc.data().content + '</td>' +
                                     '<td>' + time + '</td>' +
                                     '<td>' + '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
-                                    '<td>' + '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>' + '</td>' +
+                                    '<td>' + '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Reject</button>' + '</td>' +
                                     '</tr>';
                                 reportTable.row.add([
-                                    postID = doc.data().userID,
-                                    userName = doc.data().userName,
+                                    // postID = doc.data().userID,
+                                    userName = "<a href=\"profile?userID=" + doc.data().userID + "\">" + doc.data().userName + "</a>",
                                     status = status,
                                     like = doc.data().content,
                                     time = time,
                                     approval = '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>',
-                                    cancel = '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Cancel</button>'
+                                    cancel = '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Reject</button>'
                                 ]).draw(true);
                                 // table.insertAdjacentHTML('beforeend', rows);
                             }
                         })
                     })
                 })
+               
             })
         } catch (error) {
             console.log("Data error: " + error);

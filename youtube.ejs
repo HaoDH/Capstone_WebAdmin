@@ -202,11 +202,11 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Title</label>
-                                        <input type="text" class="form-control" id="titleYoutube" placeholder="Title">
+                                        <input type="text" class="form-control" id="titleYoutube" maxlength="100" placeholder="Title">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Youtube Code</label>
-                                        <input placeholder="Enter Youtube code here !!!" type="text" class="form-control" id="codeYoutube" placeholder="Youtube Code">
+                                        <input maxlength="50" placeholder="Enter Youtube code here !!!" type="text" class="form-control" id="codeYoutube" placeholder="Youtube Code">
                                     </div>
                                     <button onclick="uploadYoutube()" id="btn-youtube" class="btn btn-primary">Upload</button>
                                 </div>
@@ -225,7 +225,7 @@
                                         <table id="youtube-table" class="display table" style="width: 100%; cellspacing: 0;">
                                             <thead>
                                                 <tr>
-                                                    <th id="docID">Doc ID</th>
+                                                    <!-- <th id="docID">Doc ID</th> -->
                                                     <th>Tip ID</th>
                                                     <th>Title</th>
                                                     <th>Youtube Code</th>
