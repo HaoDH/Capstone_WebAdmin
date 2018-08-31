@@ -133,11 +133,12 @@ categoryDB.get().then(function (querySnapshot) {
                 data: {
                     labels: ["Bữa sáng", "Bữa trưa", "Bữa tối", "Đồ ăn nhanh", "Rau, củ, quả", "Đồ uống", "Salad", "Gymer", "Bánh", "Nước xốt", "Đồ ăn đơn giản", "Health", "Phở, bún, mỳ", "Lẩu", "Tráng miệng", "Đồ ăn trẻ con", "Súp", "Đồ ăn kiêng"],
                     datasets: [{
-                        label: '# of Votes',
+                        label: '# of Posts',
                         data: myData,
                         backgroundColor: palette('tol-dv', myData.length).map(function (hex) {
                             return '#' + hex;
-                        })
+                        }),
+                        
                     }]
                 }
             });

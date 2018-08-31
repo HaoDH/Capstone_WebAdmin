@@ -67,9 +67,9 @@ postRef.get().then(function (doc) {
             var context = {
                 urlImage: doc.data().urlImage,
                 title: doc.data().title,
-                userID: doc.data().userID,
+                
                 userName: doc.data().userName,
-                postID: doc.data().postID,
+              
                 dateCreate: postTime
             }
             var el_html = template(context);
@@ -194,7 +194,7 @@ postRef.get().then(function (doc) {
                                     '<td>' + status + '</td>' +
                                     '<td>' + doc.data().content + '</td>' +
                                     '<td>' + time + '</td>' +
-                                    '<td>' + '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>' + '</td>' +
+                                    '<td>' + '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Accept</button>' + '</td>' +
                                     '<td>' + '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Reject</button>' + '</td>' +
                                     '</tr>';
                                 reportTable.row.add([
@@ -203,7 +203,7 @@ postRef.get().then(function (doc) {
                                     status = status,
                                     like = doc.data().content,
                                     time = time,
-                                    approval = '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Approval</button>',
+                                    approval = '<button onclick="addApproval(' + "'" + doc.id + "'" + ')" class="btn btn-default" style="border-color: RED; color: red">Accept</button>',
                                     cancel = '<button onclick="deleteReport(' + "'" + doc.id + "'" + ')" class="btn btn-default">Reject</button>'
                                 ]).draw(true);
                                 // table.insertAdjacentHTML('beforeend', rows);

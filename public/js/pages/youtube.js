@@ -36,12 +36,15 @@ youtubeDB.get().then(function (querySnapshot) {
         console.log("Document data:", doc.data());
         var i = 0;
         var table = document.getElementById("list-youtube");
+        var map = doc.data();
+        var date = new Date(map.timestamp);
+        var time = date.toLocaleString();
         var rows = '<tr>' +
             // '<td>' + doc.id + '</td>' +
             '<td>' + doc.data().tipID + '</td>' +
             '<td>' + doc.data().title + '</td>' +
             '<td>' + doc.data().youtubeUrl + '</td>' +
-            '<td>' + doc.data().timestamp + '</td>' +
+            '<td>' + time + '</td>' +
             '<td>' + '<button class="btn btn-default" style="border-color: RED; color: red" onclick="deleteVideo(' + "'" + doc.id + "'" + ')" class="btn btn-default">Delete</button>' + '</td>' +
             '</tr>';
         reportTable.row.add([
@@ -49,7 +52,7 @@ youtubeDB.get().then(function (querySnapshot) {
             tipID = doc.data().tipID,
             title = doc.data().title,
             youtubeCode = doc.data().youtubeUrl,
-            timestamp = doc.data().timestamp,
+            timestamp = time,
             cancel = '<button class="btn btn-default" style="border-color: RED; color: red" onclick=deleteVideo(' + doc.id + ')" class="btn btn-default">Delete</button>'
         ]).draw();
         table.insertAdjacentHTML('beforeend', rows);
@@ -59,25 +62,29 @@ youtubeDB.get().then(function (querySnapshot) {
         "destroy": true,
         "jQueryUI": true,
         "pagingType": "full_numbers",
-        "columnDefs": [{
-            "targets": 0,
-            "render": function (data, type, row) {
-                if (type === "display") {
-                    // return "<a href=\"javascript:deleteVideo(" + data + ")\">" + data + "</a>";
+        "columnDefs": [
+            {
+                "targets": 2,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a  target=_blank href=\"https://www.youtube.com/watch?v=" + data + "\">" + data + "</a>";
+                    }
+                    return data;
                 }
-                return data;
+            },
+            {
+                "targets": 1,
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<a  target=_blank href=\"https://www.youtube.com/watch?v=" + row[2] + "\">" + data + "</a>";
+                    }
+                    return data;
+                }
             }
-        }]
+        ]
     });
     var table = $('#youtube-table').DataTable();
-    $('#youtube-table tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        } else {
-            table.$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-    });
+
 })
 
 function deleteVideo(docID) {

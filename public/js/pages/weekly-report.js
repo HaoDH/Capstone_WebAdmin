@@ -117,6 +117,7 @@ function drawUserChart() {
                         return '#' + hex;
                     }),
                     borderColor : "rgb(99, 203, 137)",
+                    
                 }]
             }
         });
