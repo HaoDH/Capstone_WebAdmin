@@ -30,18 +30,17 @@ postRef.get().then(function (doc) {
         reportRef = db.collection("Report").where('postID', '==', doc.data().postID);
         console.log("Number of step: " + doc.data().postSteps);
         var step = doc.data().postSteps;
-        function Data(numberOfStep, description, imgURL, temp, time_duration) {
+        function Data(numberOfStep, description, imgURL, time_duration) {
             this.numberOfStep = numberOfStep;
             this.description = description;
             this.imgURL = imgURL;
-            this.temp = temp;
             this.time_duration = time_duration;
         }
         var i;
         var cast = [];
         for (i = 0; i < step.length; i++) {
             console.log("data of step: " + step[i].description);
-            cast.push(new Data(i + 1, step[i].description, step[i].imgURL, step[i].temp, step[i].time_duration));
+            cast.push(new Data(i + 1, step[i].description, step[i].imgURL, step[i].time_duration));
         }
         var jsonString = JSON.stringify(cast);
         // document.write(jsonString);

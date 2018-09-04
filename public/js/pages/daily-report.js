@@ -272,6 +272,7 @@ function displayInfoOfDaily(){
                 console.log(doc.id + doc.data().countView);
                 newPostInTheDay = newPostInTheDay + 1;
                 viewPost = viewPost + doc.data().countView;
+                console.log("View daily: " + viewPost);
             } else {
                 console.log("something happen");
             }
@@ -279,6 +280,7 @@ function displayInfoOfDaily(){
         var newPost = document.getElementById("new-post-in-the-day");
         newPost.innerText = newPostInTheDay;
         var viewDay = document.getElementById("count-view");
+       
         viewDay.innerText = viewPost;
     })
         .catch(function (error) {
