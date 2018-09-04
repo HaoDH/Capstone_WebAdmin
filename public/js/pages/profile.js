@@ -466,6 +466,7 @@ function lockUser() {
                             })
                             console.log("Document successfully updated!");
                         })
+                        window.location.reload(true);
                     } else {
                         window.alert("You can't delete this account!!! + Number Post has been delete: " + user.postRemoved);
                         return false;

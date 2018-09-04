@@ -25,6 +25,7 @@ function uploadYoutube() {
         } else {
             window.alert("Please enter value in the title and youtube code")
         }
+        window.location.reload(true);
     } else {
         return false;
     }
@@ -91,7 +92,8 @@ function deleteVideo(docID) {
     if (confirm("Are you sure you want to delete this Post? : ")) {
         db.collection("Youtube").doc(docID).delete().then(function () {
             console.log("Youtube successfully deleted!");
-            window.location.href = "youtube";
+            // window.location.href = "youtube";
+            window.location.reload(true);
         }).catch(function (error) {
             console.error("Error removing document: ", error);
         });

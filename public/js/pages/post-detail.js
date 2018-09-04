@@ -267,7 +267,7 @@ function addApproval(_docID) {
         if (doc.exists) {
             number = doc.data().numberOfReported;
             console.log("Number: " + number);
-            if (confirm("Are you sure you want to approval this report?")) {
+            if (confirm("Are you sure you want to accept this report?")) {
                 db.collection("Post").doc(docID).update({
                     numberOfReported: number + 1,
                 });
@@ -275,6 +275,7 @@ function addApproval(_docID) {
                 db.collection("Report").doc(reportID).collection("listreport").doc(_docID).update({
                     status : 1,
                 })
+                window.location.reload(true);
             } else {
                 console.log("Why!!!")
                 return false;
